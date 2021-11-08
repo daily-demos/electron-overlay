@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://*.staging.daily.co https://*.daily.co; script-src 'self' https://unpkg.com/@daily-co/daily-js 'unsafe-eval'; connect-src https://*.staging.daily.co https://*.daily.co https://qa-ks.pluot.blue/tt-150331.json wss:; worker-src 'self' blob:;">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Daily Flex Overaly</title>
+  </head>
+  <body>
+    <div id="wrapper">
+    <div id="nav" class="clickable" draggable="true">
+      <div id="entry">
+        <form id="enterCall">
+          <label>Your Name: <input type="text" id="userName" class="clickable" required="true" /></label>
+          <label>Room URL: <input type="text" id="roomURL" class="clickable" required="true" /></label>
+          <button type="submit" class="clickable">Join</button>
+        </form>
+      </div>
+      <div id="callControls">
+        <button id="leave" class="clickable">Leave Call</button>
+        <button id="toggleCam" class="clickable" disabled>Enable Camera</button>
+        <button id="toggleMic" class="clickable" disabled>Enable Mic</button>
+      </div>
+      <button id="close" class="clickable">Exit</button>
+    </div>
+
+    <div id="tiles">
+      <div id="localParticipant" class="clickable participant" draggable="true">
+        <div class="name">You!</div>
+        <div id="localTile" class="clickable tile">
+          <video id="localTrack" class="clickable fit" playsinline autoplay muted></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer/renderer.js"></script>
+    <script src="https://unpkg.com/@daily-co/daily-js"></script>
+    <script src="./renderer/daily.js" type="module"></script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "daily-electron",
+  "version": "1.0.0",
+  "description": "An Electron application using a Daily custom call object",
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev-start": "electron . -dev"
+  },
+  "repository": "https://github.com/lizadaily/electron-test",
+  "keywords": [
+    "Electron",
+    "Daily",
+    "DailyJS",
+    "WebRTC",
+    "demo"
+  ],
+  "author": "Liza Shulyayeva",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "@daily-co/daily-js": "^0.21.0"
+  },
+  "devDependencies": {
+    "electron": "^15.3.0",
+    "nodemon": "^2.0.14"
+  }
+}
