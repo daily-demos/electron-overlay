@@ -3,7 +3,7 @@ callFrame.join({ url: 'https://liza.staging.daily.co/hello' }); */
 import { registerJoinFormListener, registerLeaveBtnListener, registerCamBtnListener, registerMicBtnListener, updateCamBtn, updateCallControls, updateMicBtn } from './nav.js'
 import { updateLocalTile, addOrUpdateTile, initLocalTile, removeAllTiles, removeTile } from './tile.js';
 
-let co = null;
+let callObject = null;
 
 let localState = {
     audio: false,
@@ -25,7 +25,7 @@ async function enumerateDevices() {
 
 async function initAndJoin(roomURL, name) {
     initLocalTile();
-    co = DailyIframe.createCallObject()
+    callObject = DailyIframe.createCallObject()
     .on('app-message', handleAppMessage)
     .on("camera-error", handleCameraError)
     .on("joined-meeting", handleJoinedMeeting)
@@ -40,9 +40,9 @@ async function initAndJoin(roomURL, name) {
 async function leave() {
     updateCamBtn(false);
     updateMicBtn(false);
-    co.leave();
-    co = null;
-    updateCallControls(co !== null);
+    callObject.leave();
+    callObject = null;
+    updateCallControls(false);
 }
 
 function toggleCamera() {
@@ -50,17 +50,17 @@ function toggleCamera() {
     if (!newState) {
         updateLocalTile();
     }
-    co.setLocalVideo(newState);
+    callObject.setLocalVideo(newState);
 }
 
 function toggleMicrophone() {
-    co.setLocalAudio(!localState.audio);
+    callObject.setLocalAudio(!localState.audio);
 }
 
 async function join(roomURL, name) {
     console.log("Joining " + roomURL);
     try {
-        await co.join({url: roomURL, userName: name});
+        await callObject.join({url: roomURL, userName: name});
     } catch (e) {
         console.error(e);
     }  
@@ -79,7 +79,7 @@ function handleError(event) {
 }
 
 function handleJoinedMeeting(event) {
-    updateCallControls(co !== null);
+    updateCallControls(callObject !== null);
     updateCamBtn(localState.video);
     updateMicBtn(localState.audio);
 }
@@ -90,7 +90,7 @@ function handleLeftMeeting(event) {
 
 function handleParticipantUpdated(event) {
     const up = event.participant;
-    if (up.session_id === co.participants().local.session_id) {
+    if (up.session_id === callObject.participants().local.session_id) {
         updateLocal(up);
     } else {
         addOrUpdateTile(up.session_id, up.user_name, up.videoTrack, up.audioTrack);
