@@ -69,7 +69,7 @@ function addTile(id, userName) {
     const participant = document.createElement("div");
     participant.draggable = true;
 
-    participant.id=getParticipantID(id);;
+    participant.id=getParticipantID(id);
     participant.classList.add("clickable", "participant", "remote-participant");
     const tile = document.createElement("div");
     tile.id = `tile-${id}`;
@@ -112,17 +112,6 @@ export function removeAllTiles() {
         const ele = eles[0];
         ele.remove();
     }
-}
-
-function getConstraints(currentSettings) {
-    const constraints = {
-        width: {min: 150},
-        height: {min: 150},
-        advanced: [
-          {aspectRatio: currentSettings.aspectRatio}
-        ]
-    }
-    return constraints;
 }
 
 function generateLinearGradient() {

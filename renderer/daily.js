@@ -1,5 +1,3 @@
-/* let callFrame = window.DailyIframe.createFrame();
-callFrame.join({ url: 'https://liza.staging.daily.co/hello' }); */
 import { registerJoinFormListener, registerLeaveBtnListener, registerCamBtnListener, registerMicBtnListener, updateCamBtn, updateCallControls, updateMicBtn } from './nav.js'
 import { updateLocalTile, addOrUpdateTile, initLocalTile, removeAllTiles, removeTile } from './tile.js';
 
@@ -14,6 +12,7 @@ registerJoinFormListener(initAndJoin);
 registerLeaveBtnListener(leave);
 registerCamBtnListener(toggleCamera);
 registerMicBtnListener(toggleMicrophone);
+
 enumerateDevices();
 
 async function enumerateDevices() {
@@ -78,13 +77,13 @@ function handleError(event) {
     console.error(event);
 }
 
-function handleJoinedMeeting(event) {
+function handleJoinedMeeting() {
     updateCallControls(callObject !== null);
     updateCamBtn(localState.video);
     updateMicBtn(localState.audio);
 }
 
-function handleLeftMeeting(event) {
+function handleLeftMeeting() {
     removeAllTiles();
 }
 

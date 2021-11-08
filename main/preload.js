@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 })
 
-window.addEventListener('DOMNodeInserted', (event) => {
+window.addEventListener('DOMNodeInserted', () => {
   refreshDraggableElements();
 })
 

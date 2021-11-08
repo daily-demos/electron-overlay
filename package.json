@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "electron": "^15.3.0",
+    "eslint": "^8.2.0",
     "nodemon": "^2.0.14"
   }
 }
