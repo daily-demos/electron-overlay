@@ -1,3 +1,5 @@
+// daily.js contains all DailyJS listeners and call joining/leaving logic.
+
 import {
   registerJoinFormListener,
   registerLeaveBtnListener,

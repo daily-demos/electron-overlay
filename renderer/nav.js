@@ -1,7 +1,12 @@
-const leaveBtn = document.getElementById("leave");
+// nav.js handles all call controls
+
+import { setupDraggableElement } from "./drag.js";
+
 const toggleCamBtn = document.getElementById("toggleCam");
 const toggleMicBtn = document.getElementById("toggleMic");
 const joinForm = document.getElementById("enterCall");
+const nav = document.getElementById("nav");
+setupDraggableElement(nav);
 
 export function registerJoinFormListener(f) {
   joinForm.addEventListener("submit", (event) => {
@@ -14,6 +19,7 @@ export function registerJoinFormListener(f) {
 }
 
 export function registerLeaveBtnListener(f) {
+  const leaveBtn = document.getElementById("leave");
   leaveBtn.addEventListener("click", f);
 }
 
@@ -28,6 +34,8 @@ export function registerMicBtnListener(f) {
 export function updateCallControls(joined) {
   const entry = document.getElementById("entry");
   const controls = document.getElementById("callControls");
+  // If the user has joined a call, remove the call entry form
+  // and display the call controls. Otherwise, do the opposite.
   if (joined) {
     entry.style.display = "none";
     controls.style.display = "inline-block";
@@ -38,7 +46,7 @@ export function updateCallControls(joined) {
   }
 }
 
-export function updateCamBtn(camOn, disabled) {
+export function updateCamBtn(camOn) {
   let txt = "";
   if (camOn) {
     txt = "Disable";
@@ -47,10 +55,9 @@ export function updateCamBtn(camOn, disabled) {
   }
   txt += " Camera";
   toggleCamBtn.innerText = txt;
-  toggleCamBtn.disabled = disabled;
 }
 
-export function updateMicBtn(micOn, disabled) {
+export function updateMicBtn(micOn) {
   let txt = "";
   if (micOn) {
     txt = "Disable";
@@ -59,5 +66,4 @@ export function updateMicBtn(micOn, disabled) {
   }
   txt += " Mic";
   toggleMicBtn.innerText = txt;
-  toggleMicBtn.disabled = disabled;
 }
