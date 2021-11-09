@@ -6,6 +6,8 @@ const toggleCamBtn = document.getElementById("toggleCam");
 const toggleMicBtn = document.getElementById("toggleMic");
 const joinForm = document.getElementById("enterCall");
 const nav = document.getElementById("nav");
+document.getElementById("exit").addEventListener("click", api.close);
+
 setupDraggableElement(nav);
 
 export function registerJoinFormListener(f) {

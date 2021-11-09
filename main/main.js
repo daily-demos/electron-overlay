@@ -13,10 +13,10 @@ function createWindow() {
     autoHideMenuBar: true,
     transparent: true,
   });
-  mainWindow.setIgnoreMouseEvents(true, { forward: true });
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
+    mainWindow.setIgnoreMouseEvents(true, { forward: true });
     mainWindow.setAlwaysOnTop(true, "screen");
     ipcMain.on("set-ignore-mouse-events", (event, ...args) => {
       const win = BrowserWindow.fromWebContents(event.sender);
