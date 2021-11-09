@@ -18,9 +18,10 @@ window.addEventListener("DOMNodeInserted", () => {
 // interact with background applications)
 function refreshClickableElements() {
   const clickableElements = document.getElementsByClassName("clickable");
+  const listeningAttr = "listeningForMouse";
   for (const ele of clickableElements) {
     // If the listeners are already set up for this element, skip it.
-    if (ele.getAttribute("listeningForMouse") === "true") {
+    if (ele.getAttribute(listeningAttr)) {
       continue;
     }
     ele.addEventListener("mouseenter", () => {
@@ -29,7 +30,7 @@ function refreshClickableElements() {
     ele.addEventListener("mouseleave", () => {
       ipcRenderer.send("set-ignore-mouse-events", true, { forward: true });
     });
-    ele.setAttribute("listeningForMouse", "true");
+    ele.setAttribute(listeningAttr, true);
   }
 }
 
