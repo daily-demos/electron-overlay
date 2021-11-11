@@ -115,7 +115,7 @@ function streamToTile(trackTag, videoTrack, audioTrack) {
 }
 
 export function removeTile(id) {
-  document.getElementById(getVideoID(id))?.remove();
+  document.getElementById(getParticipantID(id))?.remove();
 }
 
 export function removeAllTiles() {
