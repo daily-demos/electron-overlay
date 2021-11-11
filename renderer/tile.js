@@ -12,9 +12,7 @@ setupDraggableElement(localParticipant);
 export function initLocalTile() {
   const localTile = document.getElementById("localTile");
   localParticipant.style.display = "inline-block";
-  const gradient = generateLinearGradient();
-  const img = `linear-gradient(45deg, #${gradient.c1}, #${gradient.c2})`;
-  localTile.style.backgroundImage = img;
+  localTile.style.backgroundImage = generateLinearGradient();
 }
 
 // updateLocalTile sets the given videoTrack as the video source for the
@@ -69,9 +67,7 @@ function addTile(id, userName) {
   tile.id = `tile-${id}`;
   tile.classList.add("clickable", "tile");
 
-  const gradient = generateLinearGradient();
-  const img = `linear-gradient(45deg, #${gradient.c1}, #${gradient.c2})`;
-  tile.style.backgroundImage = img;
+  tile.style.backgroundImage = generateLinearGradient();
 
   // Create name element
   const name = document.createElement("div");
@@ -136,8 +132,11 @@ function getParticipantID(id) {
 }
 
 function generateLinearGradient() {
-  return {
-    c1: Math.floor(Math.random() * 16777215).toString(16),
-    c2: Math.floor(Math.random() * 16777215).toString(16),
-  };
+  const c1 = Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, "0");
+  const c2 = Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, "0");
+  return `linear-gradient(45deg, #${c1}, #${c2})`;
 }
