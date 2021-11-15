@@ -6,6 +6,10 @@ const toggleCamBtn = document.getElementById("toggleCam");
 const toggleMicBtn = document.getElementById("toggleMic");
 const joinForm = document.getElementById("enterCall");
 const nav = document.getElementById("nav");
+
+const minimizeBtn = document.getElementById("minimize");
+minimizeBtn.addEventListener("click", api.minimize);
+
 document.getElementById("exit").addEventListener("click", api.close);
 
 setupDraggableElement(nav);

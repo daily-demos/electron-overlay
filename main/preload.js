@@ -14,7 +14,7 @@ window.addEventListener("DOMNodeInserted", () => {
 // The main process will send a "leave-call" event when the user clicks
 // that button in the menu, and the preload will then dispatch a matching
 // event to the DOM.
-ipcRenderer.on("leave-call", function (event, data) {
+ipcRenderer.on("leave-call", () => {
   window.dispatchEvent(new Event("leave-call"));
 });
 
@@ -50,5 +50,8 @@ contextBridge.exposeInMainWorld("api", {
   },
   refreshTray: (inCall) => {
     ipcRenderer.invoke("refresh-tray", inCall);
+  },
+  minimize: () => {
+    ipcRenderer.invoke("minimize");
   },
 });

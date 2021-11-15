@@ -45,9 +45,9 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  createWindow();
   setupTray();
 
-  createWindow();
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -72,24 +72,24 @@ function setupTray() {
   }
 
   tray = new Tray(path.join(__dirname, "/icon.png"));
-  tray.setIgnoreDoubleClickEvents(true);
   tray.setToolTip("Daily");
   setupTrayMenu(false);
 }
 
 function setupTrayMenu(inCall) {
-  const menuItems = [
-    new MenuItem({
-      label: "Exit",
-      type: "normal",
-      click() {
-        app.quit();
-      },
-    }),
-  ];
+  const menuItems = [];
   // If the user is in a call, allow them to leave the call
   // via the context menu.
-  if (inCall) {
+  if (!inCall && !mainWindow.isFocused()) {
+    const item = new MenuItem({
+      label: "Join Call",
+      type: "normal",
+      click() {
+        mainWindow.show();
+      },
+    });
+    menuItems.push(item);
+  } else if (inCall) {
     const item = new MenuItem({
       label: "Leave Call",
       type: "normal",
@@ -99,6 +99,14 @@ function setupTrayMenu(inCall) {
     });
     menuItems.push(item);
   }
+  const exitItem = new MenuItem({
+    label: "Exit",
+    type: "normal",
+    click() {
+      app.quit();
+    },
+  });
+  menuItems.push(exitItem);
 
   const contextMenu = Menu.buildFromTemplate(menuItems);
   tray.setContextMenu(contextMenu);
@@ -107,6 +115,11 @@ function setupTrayMenu(inCall) {
 // Our custom API handlers are defined below.
 ipcMain.handle("refresh-tray", (e, inCall) => {
   setupTrayMenu(inCall);
+});
+
+ipcMain.handle("minimize", () => {
+  mainWindow.hide();
+  setupTrayMenu();
 });
 
 ipcMain.handle("close-app", () => {

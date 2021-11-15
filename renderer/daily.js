@@ -18,7 +18,6 @@ import {
 } from "./tile.js";
 
 let callObject = null;
-
 let localState = {
   audio: false,
   video: false,
@@ -29,19 +28,9 @@ registerLeaveBtnListener(leave);
 registerCamBtnListener(toggleCamera);
 registerMicBtnListener(toggleMicrophone);
 
-enumerateDevices();
-
-async function enumerateDevices() {
-  await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-  let devices = await navigator.mediaDevices.enumerateDevices();
-  console.log("Devices:");
-  console.log(devices);
-}
-
 async function initAndJoin(roomURL, name) {
   initLocalTile();
   callObject = DailyIframe.createCallObject()
-    .on("app-message", handleAppMessage)
     .on("camera-error", handleCameraError)
     .on("joined-meeting", handleJoinedMeeting)
     .on("left-meeting", handleLeftMeeting)
@@ -79,10 +68,6 @@ async function join(roomURL, name) {
   } catch (e) {
     console.error(e);
   }
-}
-
-function handleAppMessage(event) {
-  console.log(event);
 }
 
 function handleCameraError(event) {
