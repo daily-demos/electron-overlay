@@ -78,8 +78,9 @@ function setupTray() {
 
 function setupTrayMenu(inCall) {
   const menuItems = [];
-  // If the user is in a call, allow them to leave the call
-  // via the context menu.
+
+  // If the user is not in a call and the window is minimized,
+  // show "Join Call" button to display the join form.
   if (!inCall && !mainWindow.isFocused()) {
     const item = new MenuItem({
       label: "Join Call",
@@ -90,6 +91,8 @@ function setupTrayMenu(inCall) {
     });
     menuItems.push(item);
   } else if (inCall) {
+    // If the user is in a call, allow them to leave the call
+    // via the context menu
     const item = new MenuItem({
       label: "Leave Call",
       type: "normal",
