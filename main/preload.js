@@ -11,6 +11,9 @@ window.addEventListener("DOMNodeInserted", () => {
 });
 
 // This listener will allow us to leave the call from the context menu
+// The main process will send a "leave-call" event when the user clicks
+// that button in the menu, and the preload will then dispatch a matching
+// event to the DOM.
 ipcRenderer.on("leave-call", function (event, data) {
   window.dispatchEvent(new Event("leave-call"));
 });

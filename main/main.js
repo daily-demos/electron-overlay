@@ -64,6 +64,8 @@ app.on("window-all-closed", function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// setupTray creates the system tray where our application will live.
 function setupTray() {
   if (app.dock) {
     app.dock.hide();
@@ -85,6 +87,8 @@ function setupTrayMenu(inCall) {
       },
     }),
   ];
+  // If the user is in a call, allow them to leave the call
+  // via the context menu.
   if (inCall) {
     const item = new MenuItem({
       label: "Leave Call",
@@ -100,7 +104,7 @@ function setupTrayMenu(inCall) {
   tray.setContextMenu(contextMenu);
 }
 
-// Our custom API listeners
+// Our custom API handlers are defined below.
 ipcMain.handle("refresh-tray", (e, inCall) => {
   setupTrayMenu(inCall);
 });
