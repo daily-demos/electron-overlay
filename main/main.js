@@ -27,7 +27,9 @@ function createWindow() {
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
     mainWindow.setIgnoreMouseEvents(true, { forward: true });
-    mainWindow.setAlwaysOnTop(true, "screen");
+    mainWindow.setVisibleOnAllWorkspaces(true,{visibleOnFullScreen:true});
+    mainWindow.setAlwaysOnTop(true, "screen-saver");
+    //mainWindow.setAlwaysOnTop(true, "screen");
     ipcMain.on("set-ignore-mouse-events", (event, ...args) => {
       const win = BrowserWindow.fromWebContents(event.sender);
       win.setIgnoreMouseEvents(...args);
