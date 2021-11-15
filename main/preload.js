@@ -10,6 +10,11 @@ window.addEventListener("DOMNodeInserted", () => {
   refreshClickableElements();
 });
 
+// This listener will allow us to leave the call from the context menu
+ipcRenderer.on("leave-call", function (event, data) {
+  window.dispatchEvent(new Event("leave-call"));
+});
+
 // refreshClickableElements finds all DOM elements which can be clicked,
 // and add listners to detect mouse enter and leave events. When the user
 // is hovering over a clickable element, we will get Electron to stop
@@ -38,7 +43,9 @@ function refreshClickableElements() {
 // to close the application when "Exit" is clicked.
 contextBridge.exposeInMainWorld("api", {
   close: () => {
-    console.log("closing");
     ipcRenderer.invoke("close-app");
+  },
+  refreshTray: (inCall) => {
+    ipcRenderer.invoke("refresh-tray", inCall);
   },
 });

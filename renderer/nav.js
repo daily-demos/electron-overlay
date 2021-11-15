@@ -23,6 +23,7 @@ export function registerJoinFormListener(f) {
 export function registerLeaveBtnListener(f) {
   const leaveBtn = document.getElementById("leave");
   leaveBtn.addEventListener("click", f);
+  window.addEventListener("leave-call", f);
 }
 
 export function registerCamBtnListener(f) {
@@ -46,6 +47,7 @@ export function updateCallControls(joined) {
     controls.style.display = "none";
     joinForm.style.display = "inline-block";
   }
+  api.refreshTray(joined);
 }
 
 export function updateCamBtn(camOn) {

@@ -10,7 +10,7 @@ This demo highlights [Daily's call object](https://www.daily.co/blog/prebuilt-ui
 
 This demo renders call participants on draggable tiles that sit over the user's screen. The demo allows clickthrough to elements under the call, allowing the user to interact with their desktop while being able to see who they're talking to and use call controls.
 
-The demo prompts the user to enter the URL of the Daily room they want to join, and the name they'd like to use.
+The demo prompts the user to enter the URL of the Daily room they want to join, and the name they'd like to use. The application lives in the system tray.
 
 ## Running locally
 
