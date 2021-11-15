@@ -81,7 +81,7 @@ function setupTrayMenu(inCall) {
 
   // If the user is not in a call and the window is minimized,
   // show "Join Call" button to display the join form.
-  if (!inCall && !mainWindow.isFocused()) {
+  if (!inCall && !mainWindow.isVisible()) {
     const item = new MenuItem({
       label: "Join Call",
       type: "normal",
