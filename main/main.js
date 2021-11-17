@@ -27,9 +27,15 @@ function createWindow() {
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
     mainWindow.setIgnoreMouseEvents(true, { forward: true });
-    mainWindow.setVisibleOnAllWorkspaces(true,{visibleOnFullScreen:true});
-    mainWindow.setAlwaysOnTop(true, "screen-saver");
-    //mainWindow.setAlwaysOnTop(true, "screen");
+    mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    let level = "screen";
+
+    // Mac OS requires a different level for our drag/drop and overlay
+    // functionality to work as expected.
+    if (process.platform === "darwin") {
+      level = "floating";
+    }
+    mainWindow.setAlwaysOnTop(true, level);
     ipcMain.on("set-ignore-mouse-events", (event, ...args) => {
       const win = BrowserWindow.fromWebContents(event.sender);
       win.setIgnoreMouseEvents(...args);
