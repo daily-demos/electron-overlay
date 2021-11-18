@@ -8,6 +8,7 @@ const {
   MenuItem,
 } = require("electron");
 const path = require("path");
+
 let mainWindow = null;
 let tray = null;
 
@@ -24,30 +25,23 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
+
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
     mainWindow.setIgnoreMouseEvents(true, { forward: true });
     mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-    let level = "screen";
+    let level = "normal";
     // Mac OS requires a different level for our drag/drop and overlay
     // functionality to work as expected.
     if (process.platform === "darwin") {
       level = "floating";
     }
     mainWindow.setAlwaysOnTop(true, level);
-
-    ipcMain.on("set-ignore-mouse-events", (event, ...args) => {
-      const win = BrowserWindow.fromWebContents(event.sender);
-      win.setIgnoreMouseEvents(...args);
-    });
   }
 
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -129,11 +123,17 @@ ipcMain.handle("refresh-tray", (e, inCall) => {
   setupTrayMenu(inCall);
 });
 
-ipcMain.handle("minimize", () => {
-  mainWindow.hide();
+ipcMain.handle("minimize", (e) => {
+  const win = BrowserWindow.fromWebContents(e.sender);
+  win.hide();
   setupTrayMenu();
 });
 
 ipcMain.handle("close-app", () => {
   app.quit();
+});
+
+ipcMain.handle("set-ignore-mouse-events", (e, ...args) => {
+  const win = BrowserWindow.fromWebContents(e.sender);
+  win.setIgnoreMouseEvents(...args);
 });

@@ -55,23 +55,11 @@ export function updateCallControls(joined) {
 }
 
 export function updateCamBtn(camOn) {
-  let txt = "";
-  if (camOn) {
-    txt = "Disable";
-  } else {
-    txt = "Enable";
-  }
-  txt += " Camera";
+  const txt = (camOn ? "Disable" : "Enable") + " Camera";
   toggleCamBtn.innerText = txt;
 }
 
 export function updateMicBtn(micOn) {
-  let txt = "";
-  if (micOn) {
-    txt = "Disable";
-  } else {
-    txt = "Enable";
-  }
-  txt += " Mic";
+  const txt = (micOn ? "Disable" : "Enable") + " Mic";
   toggleMicBtn.innerText = txt;
 }

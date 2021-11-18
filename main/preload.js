@@ -10,16 +10,8 @@ window.addEventListener("DOMNodeInserted", () => {
   refreshClickableElements();
 });
 
-// This listener will allow us to leave the call from the context menu
-// The main process will send a "leave-call" event when the user clicks
-// that button in the menu, and the preload will then dispatch a matching
-// event to the DOM.
-ipcRenderer.on("leave-call", () => {
-  window.dispatchEvent(new Event("leave-call"));
-});
-
-// refreshClickableElements finds all DOM elements which can be clicked,
-// and add listners to detect mouse enter and leave events. When the user
+// refreshClickableElements finds all DOM elements which can be clicked
+// and adds listeners to detect mouse enter and leave events. When the user
 // is hovering over a clickable element, we will get Electron to stop
 // ignoring mouse events by default. When a mouse leaves a clickable element,
 // we'll set the app to ignore mouse clicks once more (to let the user
@@ -33,17 +25,24 @@ function refreshClickableElements() {
       continue;
     }
     ele.addEventListener("mouseenter", () => {
-      ipcRenderer.send("set-ignore-mouse-events", false);
+      ipcRenderer.invoke("set-ignore-mouse-events", false);
     });
     ele.addEventListener("mouseleave", () => {
-      ipcRenderer.send("set-ignore-mouse-events", true, { forward: true });
+      ipcRenderer.invoke("set-ignore-mouse-events", true, { forward: true });
     });
     ele.setAttribute(listeningAttr, true);
   }
 }
 
-// Expose the close function to the main world. We will use this
-// to close the application when "Exit" is clicked.
+// This listener will allow us to leave the call from the context menu
+// The main process will send a "leave-call" event when the user clicks
+// that button in the menu, and the preload will then dispatch a matching
+// event to the DOM.
+ipcRenderer.on("leave-call", () => {
+  window.dispatchEvent(new Event("leave-call"));
+});
+
+// Expose the close function to the main world.
 contextBridge.exposeInMainWorld("api", {
   close: () => {
     ipcRenderer.invoke("close-app");

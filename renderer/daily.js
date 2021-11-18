@@ -38,36 +38,26 @@ async function initAndJoin(roomURL, name) {
     .on("participant-updated", handleParticipantUpdated)
     .on("participant-joined", handleParticipantJoined)
     .on("participant-left", handleParticipantLeft);
-  await join(roomURL, name);
+  try {
+    console.log("Joining " + roomURL);
+    await callObject.join({ url: roomURL, userName: name });
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 async function leave() {
-  updateCamBtn(false);
-  updateMicBtn(false);
   callObject.leave();
   callObject = null;
   updateCallControls(false);
 }
 
 function toggleCamera() {
-  const newState = !localState.video;
-  if (!newState) {
-    updateLocalTile();
-  }
-  callObject.setLocalVideo(newState);
+  callObject.setLocalVideo(!localState.video);
 }
 
 function toggleMicrophone() {
   callObject.setLocalAudio(!localState.audio);
-}
-
-async function join(roomURL, name) {
-  console.log("Joining " + roomURL);
-  try {
-    await callObject.join({ url: roomURL, userName: name });
-  } catch (e) {
-    console.error(e);
-  }
 }
 
 function handleCameraError(event) {
@@ -78,10 +68,10 @@ function handleError(event) {
   console.error(event);
 }
 
-function handleJoinedMeeting() {
+function handleJoinedMeeting(event) {
   updateCallControls(callObject !== null);
-  updateCamBtn(localState.video);
-  updateMicBtn(localState.audio);
+  const p = event.participants.local;
+  updateLocal(p);
 }
 
 function handleLeftMeeting() {
@@ -92,9 +82,9 @@ function handleParticipantUpdated(event) {
   const up = event.participant;
   if (up.session_id === callObject.participants().local.session_id) {
     updateLocal(up);
-  } else {
-    addOrUpdateTile(up.session_id, up.user_name, up.videoTrack, up.audioTrack);
+    return;
   }
+  addOrUpdateTile(up.session_id, up.user_name, up.videoTrack, up.audioTrack);
 }
 
 function handleParticipantJoined(event) {
@@ -116,12 +106,6 @@ function updateLocal(p) {
   if (localState.video != p.video) {
     localState.video = p.video;
     updateCamBtn(localState.video);
-    if (localState.video) {
-      let vt = p.videoTrack;
-      if (!vt) {
-        return;
-      }
-      updateLocalTile(vt);
-    }
+    updateLocalTile(p.videoTrack);
   }
 }
