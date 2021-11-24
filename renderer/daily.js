@@ -17,6 +17,8 @@ import {
   removeTile,
 } from "./tile.js";
 
+const playableState = "playable";
+
 let callObject = null;
 let localState = {
   audio: false,
@@ -48,6 +50,7 @@ async function initAndJoin(roomURL, name) {
 
 async function leave() {
   callObject.leave();
+  callObject.destroy();
   callObject = null;
   updateCallControls(false);
 }
@@ -84,12 +87,26 @@ function handleParticipantUpdated(event) {
     updateLocal(up);
     return;
   }
-  addOrUpdateTile(up.session_id, up.user_name, up.videoTrack, up.audioTrack);
+  const tracks = getParticipantTracks(up);
+  addOrUpdateTile(up.session_id, up.user_name, tracks.video, tracks.audio);
 }
 
 function handleParticipantJoined(event) {
   const up = event.participant;
-  addOrUpdateTile(up.session_id, up.user_name, up.videoTrack, up.audioTrack);
+  const tracks = getParticipantTracks(up);
+  addOrUpdateTile(up.session_id, up.user_name, tracks.video, tracks.audio);
+}
+
+function getParticipantTracks(participant) {
+  const vt = participant?.tracks.video;
+  const at = participant?.tracks.audio;
+
+  const videoTrack = vt.state === playableState ? vt.persistentTrack : null;
+  const audioTrack = at.state === playableState ? at.persistentTrack : null;
+  return {
+    video: videoTrack,
+    audio: audioTrack,
+  };
 }
 
 function handleParticipantLeft(event) {
@@ -106,6 +123,8 @@ function updateLocal(p) {
   if (localState.video != p.video) {
     localState.video = p.video;
     updateCamBtn(localState.video);
-    updateLocalTile(p.videoTrack);
+    const vt = p.tracks.video;
+    const videoTrack = vt.state === playableState ? vt.persistentTrack : null;
+    updateLocalTile(videoTrack);
   }
 }
