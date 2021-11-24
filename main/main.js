@@ -151,5 +151,6 @@ app.on("browser-window-created", function (e, window) {
   }
   window.setMenu(null);
   const level = getLevel();
+  window.webContents.backgroundThrottling = false;
   window.setAlwaysOnTop(true, level);
 });
