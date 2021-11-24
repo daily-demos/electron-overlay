@@ -11,6 +11,7 @@ const path = require("path");
 
 let mainWindow = null;
 let tray = null;
+const dev = app.commandLine.hasSwitch("dev");
 
 function createWindow() {
   // Create the browser window.
@@ -26,17 +27,11 @@ function createWindow() {
     skipTaskbar: true,
   });
 
-  const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
     mainWindow.setIgnoreMouseEvents(true, { forward: true });
     mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-    let level = "normal";
-    // Mac OS requires a different level for our drag/drop and overlay
-    // functionality to work as expected.
-    if (process.platform === "darwin") {
-      level = "floating";
-    }
+    const level = getLevel();
     mainWindow.setAlwaysOnTop(true, level);
   }
 
@@ -64,6 +59,16 @@ app.whenReady().then(() => {
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
 });
+
+function getLevel() {
+  let level = "normal";
+  // Mac OS requires a different level for our drag/drop and overlay
+  // functionality to work as expected.
+  if (process.platform === "darwin") {
+    level = "floating";
+  }
+  return level;
+}
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
@@ -136,4 +141,15 @@ ipcMain.handle("close-app", () => {
 ipcMain.handle("set-ignore-mouse-events", (e, ...args) => {
   const win = BrowserWindow.fromWebContents(e.sender);
   win.setIgnoreMouseEvents(...args);
+});
+
+// Make sure all new windows don't have a menu bar
+// and are always on top.
+app.on("browser-window-created", function (e, window) {
+  if (dev) {
+    return;
+  }
+  window.setMenu(null);
+  const level = getLevel();
+  window.setAlwaysOnTop(true, level);
 });

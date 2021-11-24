@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; frame-src 'self'; script-src 'self'; connect-src wss:; worker-src 'self' blob:;"
+    />
+    <link href="../styles.css" rel="stylesheet" />
+    <title>Screen Share</title>
+  </head>
+  <body>
+    <video id="screenshareTrack" class="fit" playsinline autoplay muted></video>
+  </body>
+  <script src="./screenshare.js" type="module"></script>
+</html>

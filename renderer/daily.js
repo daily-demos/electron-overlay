@@ -1,5 +1,4 @@
 // daily.js contains all DailyJS listeners and call joining/leaving logic.
-
 import {
   registerJoinFormListener,
   registerLeaveBtnListener,
@@ -16,6 +15,7 @@ import {
   removeAllTiles,
   removeTile,
 } from "./tile.js";
+import { checkScreenShare } from "./screenshare.js";
 
 const playableState = "playable";
 
@@ -89,6 +89,9 @@ function handleParticipantUpdated(event) {
   }
   const tracks = getParticipantTracks(up);
   addOrUpdateTile(up.session_id, up.user_name, tracks.video, tracks.audio);
+
+  let sv = up.tracks.screenVideo;
+  checkScreenShare(up.session_id, sv);
 }
 
 function handleParticipantJoined(event) {
