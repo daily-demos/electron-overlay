@@ -2,31 +2,6 @@
 
 import { setupDraggableElement } from "./drag.js";
 
-const localParticipant = document.getElementById("localParticipant");
-
-// Make localParticipant draggable.
-setupDraggableElement(localParticipant);
-
-// initLocalTile generates a gradient background for the local participant
-// tile, to be displayed when their camera is off.
-export function initLocalTile() {
-  const localTile = document.getElementById("localTile");
-  localParticipant.style.display = "inline-block";
-  localTile.style.backgroundImage = generateLinearGradient();
-}
-
-// updateLocalTile sets the given videoTrack as the video source for the
-// local participant.
-export function updateLocalTile(videoTrack) {
-  const localTrackTag = document.getElementById("localTrack");
-  if (videoTrack) {
-    let stream = new MediaStream([videoTrack]);
-    localTrackTag.srcObject = stream;
-    return;
-  }
-  localTrackTag.srcObject = null;
-}
-
 // addOrUpdateTile adds a tile for a participant, or updates a tile
 // if it already exists.
 export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
@@ -60,7 +35,7 @@ function addTile(id, userName) {
   participant.draggable = true;
 
   participant.id = getParticipantID(id);
-  participant.classList.add("clickable", "participant", "remote-participant");
+  participant.classList.add("clickable", "participant");
 
   // Create tile which will contain the video
   const tile = document.createElement("div");
@@ -115,8 +90,7 @@ export function removeTile(id) {
 }
 
 export function removeAllTiles() {
-  localParticipant.style.display = "none";
-  const eles = document.getElementsByClassName("remote-participant");
+  const eles = document.getElementsByClassName("participant");
   while (eles.length > 0) {
     const ele = eles[0];
     ele.remove();

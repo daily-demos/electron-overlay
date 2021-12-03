@@ -9,13 +9,7 @@ import {
   updateCallControls,
   updateMicBtn,
 } from "./nav.js";
-import {
-  updateLocalTile,
-  addOrUpdateTile,
-  initLocalTile,
-  removeAllTiles,
-  removeTile,
-} from "./tile.js";
+import { addOrUpdateTile, removeAllTiles, removeTile } from "./tile.js";
 
 const playableState = "playable";
 
@@ -31,7 +25,6 @@ registerCamBtnListener(toggleCamera);
 registerMicBtnListener(toggleMicrophone);
 
 async function initAndJoin(roomURL, name) {
-  initLocalTile();
   callObject = DailyIframe.createCallObject()
     .on("camera-error", handleCameraError)
     .on("joined-meeting", handleJoinedMeeting)
@@ -85,6 +78,8 @@ function handleParticipantUpdated(event) {
   const up = event.participant;
   if (up.session_id === callObject.participants().local.session_id) {
     updateLocal(up);
+    const tracks = getParticipantTracks(up);
+    addOrUpdateTile(up.session_id, "You!", tracks.video, null);
     return;
   }
   const tracks = getParticipantTracks(up);
@@ -123,8 +118,8 @@ function updateLocal(p) {
   if (localState.video != p.video) {
     localState.video = p.video;
     updateCamBtn(localState.video);
-    const vt = p.tracks.video;
-    const videoTrack = vt.state === playableState ? vt.persistentTrack : null;
-    updateLocalTile(videoTrack);
+    //  const vt = p.tracks.video;
+    // const videoTrack = vt.state === playableState ? vt.persistentTrack : null;
+    // updateLocalTile(videoTrack);
   }
 }
