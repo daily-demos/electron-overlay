@@ -25,7 +25,7 @@ export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
     audioTag = document.getElementById(audioTagID);
   } else {
     // If the participant does not already exist, create their tile.
-    tags = addTile(id, userName);
+    const tags = addTile(id, userName);
     videoTag = tags.video;
     audioTag = tags.audio;
   }
