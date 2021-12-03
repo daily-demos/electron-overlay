@@ -78,8 +78,6 @@ function handleParticipantUpdated(event) {
   const up = event.participant;
   if (up.session_id === callObject.participants().local.session_id) {
     updateLocal(up);
-    const tracks = getParticipantTracks(up);
-    addOrUpdateTile(up.session_id, "You!", tracks.video, null);
     return;
   }
   const tracks = getParticipantTracks(up);
@@ -113,13 +111,11 @@ function updateLocal(p) {
   if (localState.audio != p.audio) {
     localState.audio = p.audio;
     updateMicBtn(localState.audio);
-    // Was thinking of early return here, but unsure if updates can be bundled?
   }
   if (localState.video != p.video) {
     localState.video = p.video;
     updateCamBtn(localState.video);
-    //  const vt = p.tracks.video;
-    // const videoTrack = vt.state === playableState ? vt.persistentTrack : null;
-    // updateLocalTile(videoTrack);
   }
+  const tracks = getParticipantTracks(p);
+  addOrUpdateTile(p.session_id, "You!", tracks.video, null);
 }
