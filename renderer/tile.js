@@ -65,7 +65,7 @@ function addTile(id, userName) {
   const video = document.createElement("video");
   video.id = getVideoID(id);
   video.classList.add("clickable", "fit");
-  video.playsinline = true;
+  video.playsInline = true;
   video.autoplay = true;
   tile.appendChild(video);
 
