@@ -8,6 +8,9 @@ export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
   const videoTagID = getVideoID(id);
   let videoTag = null;
 
+  const audioTagID = getAudioID(id);
+  let audioTag = null;
+
   const participantID = getParticipantID(id);
   let participant = document.getElementById(participantID);
 
@@ -19,13 +22,18 @@ export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
       name.innerText = userName;
     }
     videoTag = document.getElementById(videoTagID);
+    audioTag = document.getElementById(audioTagID);
   } else {
     // If the participant does not already exist, create their tile.
-    videoTag = addTile(id, userName);
+    tags = addTile(id, userName);
+    videoTag = tags.video;
+    audioTag = tags.audio;
   }
 
-  // Stream the given tracks to the participant's video tile
-  streamToTile(videoTag, videoTrack, audioTrack);
+  // Stream the given tracks to the participant's video
+  // and audio tags
+  stream(videoTag, videoTrack);
+  stream(audioTag, audioTrack);
 }
 
 // addTile adds a participant tile for the given ID and username.
@@ -61,28 +69,24 @@ function addTile(id, userName) {
   video.autoplay = true;
   tile.appendChild(video);
 
+  const audio = document.createElement("audio");
+  audio.id = getAudioID(id);
+  audio.autoplay = true;
+  tile.appendChild(audio);
+
   const tiles = document.getElementById("tiles");
   tiles.appendChild(participant);
   setupDraggableElement(participant);
-  return video;
+  return { video: video, audio: audio };
 }
 
-function streamToTile(trackTag, videoTrack, audioTrack) {
-  // Stop streaming anything if tracks are null
-  if (videoTrack == null && audioTrack == null) {
-    trackTag.srcObject = null;
+function stream(tag, track) {
+  if (track === null) {
+    tag.srcObject = null;
     return;
   }
-  let tracks = [];
-  if (videoTrack) {
-    tracks.push(videoTrack);
-  }
-  if (audioTrack) {
-    tracks.push(audioTrack);
-  }
-
-  let stream = new MediaStream(tracks);
-  trackTag.srcObject = stream;
+  let stream = new MediaStream([track]);
+  tag.srcObject = stream;
 }
 
 export function removeTile(id) {
@@ -99,6 +103,10 @@ export function removeAllTiles() {
 
 function getVideoID(id) {
   return `video-${id}`;
+}
+
+function getAudioID(id) {
+  return `audio-${id}`;
 }
 
 function getParticipantID(id) {
