@@ -15,8 +15,6 @@ let tray = null;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    fullscreen: true,
-    simpleFullscreen: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
@@ -25,6 +23,8 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
+  mainWindow.maximize();
+  mainWindow.focus();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
