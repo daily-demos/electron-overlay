@@ -5,8 +5,12 @@
   },
   "extends": ["eslint:recommended", "prettier"],
   "parserOptions": {
-    "ecmaVersion": 13,
+    "ecmaVersion": 12,
     "sourceType": "module"
+  },
+  "globals": {
+    "DailyIframe": true,
+    "api": true
   },
   "rules": {}
 }
