@@ -25,7 +25,11 @@ registerCamBtnListener(toggleCamera);
 registerMicBtnListener(toggleMicrophone);
 
 async function initAndJoin(roomURL, name) {
-  callObject = DailyIframe.createCallObject()
+  callObject = DailyIframe.createCallObject({
+    dailyConfig: {
+      experimentalChromeVideoMuteLightOff: true,
+    },
+  })
     .on("camera-error", handleCameraError)
     .on("joined-meeting", handleJoinedMeeting)
     .on("left-meeting", handleLeftMeeting)
