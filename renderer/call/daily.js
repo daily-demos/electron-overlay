@@ -1,7 +1,7 @@
 // daily.js contains all DailyJS listeners and call joining/leaving logic.
 
 import {
-  registerJoinFormListener,
+  registerJoinListener,
   registerLeaveBtnListener,
   registerCamBtnListener,
   registerMicBtnListener,
@@ -19,7 +19,7 @@ let localState = {
   video: false,
 };
 
-registerJoinFormListener(initAndJoin);
+registerJoinListener(initAndJoin);
 registerLeaveBtnListener(leave);
 registerCamBtnListener(toggleCamera);
 registerMicBtnListener(toggleMicrophone);
@@ -40,16 +40,17 @@ async function initAndJoin(roomURL, name) {
   try {
     console.log("Joining " + roomURL);
     await callObject.join({ url: roomURL, userName: name });
+    return true;
   } catch (e) {
     console.error(e);
   }
+  return false;
 }
 
 async function leave() {
   callObject.leave();
   callObject.destroy();
   callObject = null;
-  updateCallControls(false);
 }
 
 function toggleCamera() {
@@ -69,12 +70,13 @@ function handleError(event) {
 }
 
 function handleJoinedMeeting(event) {
-  updateCallControls(callObject !== null);
+  updateCallControls(true);
   const p = event.participants.local;
   updateLocal(p);
 }
 
 function handleLeftMeeting() {
+  updateCallControls(false);
   removeAllTiles();
 }
 

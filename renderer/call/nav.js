@@ -4,30 +4,30 @@ import { setupDraggableElement } from "./drag.js";
 
 const toggleCamBtn = document.getElementById("toggleCam");
 const toggleMicBtn = document.getElementById("toggleMic");
-const joinForm = document.getElementById("enterCall");
 const nav = document.getElementById("nav");
-
-const minimizeBtn = document.getElementById("minimize");
-minimizeBtn.addEventListener("click", api.minimize);
-
-document.getElementById("exit").addEventListener("click", api.close);
 
 setupDraggableElement(nav);
 
-export function registerJoinFormListener(f) {
-  joinForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    joinForm.style.display = "none";
-    const urlEle = document.getElementById("roomURL");
-    const nameEle = document.getElementById("userName");
-    f(urlEle.value, nameEle.value);
+export function registerJoinListener(f) {
+  window.addEventListener("join-call", (e) => {
+    const url = e.detail.url;
+    const name = e.detail.name;
+    f(url, name).then((joined) => {
+      if (joined) {
+        api.joinedCall(url);
+      }
+    });
   });
 }
 
 export function registerLeaveBtnListener(f) {
   const leaveBtn = document.getElementById("leave");
-  leaveBtn.addEventListener("click", f);
-  window.addEventListener("leave-call", f);
+  const leave = () => {
+    f();
+    api.leftCall();
+  };
+  leaveBtn.addEventListener("click", leave);
+  window.addEventListener("leave-call", leave);
 }
 
 export function registerCamBtnListener(f) {
@@ -38,20 +38,15 @@ export function registerMicBtnListener(f) {
   toggleMicBtn.addEventListener("click", f);
 }
 
-export function updateCallControls(joined) {
-  const entry = document.getElementById("entry");
+export function updateCallControls(inCall) {
   const controls = document.getElementById("callControls");
   // If the user has joined a call, remove the call entry form
   // and display the call controls. Otherwise, do the opposite.
-  if (joined) {
-    entry.style.display = "none";
+  if (inCall) {
     controls.style.display = "inline-block";
-  } else {
-    entry.style.display = "inline-block";
-    controls.style.display = "none";
-    joinForm.style.display = "inline-block";
+    return;
   }
-  api.refreshTray(joined);
+  controls.style.display = "none";
 }
 
 export function updateCamBtn(camOn) {

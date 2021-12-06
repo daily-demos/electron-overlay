@@ -10,10 +10,35 @@ const {
 const path = require("path");
 
 let mainWindow = null;
+let trayWindow = null;
 let tray = null;
 
+function createTrayWindow() {
+  // Create the window that opens on app start
+  // and tray click
+  trayWindow = new BrowserWindow({
+    webPreferences: {
+      preload: path.join(__dirname, "preloadTray.js"),
+    },
+    width: 280,
+    height: 288,
+    frame: false,
+    autoHideMenuBar: true,
+    transparent: true,
+    skipTaskbar: true,
+  });
+  trayWindow.loadFile("tray.html");
+  trayWindow.on("blur", () => {
+    trayWindow.hide();
+  });
+  trayWindow.on("show", () => {
+    trayWindow.focus();
+  });
+  trayWindow.show();
+}
+
 function createWindow() {
-  // Create the browser window.
+  // Create the browser window.dsfdsfs
   mainWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -24,7 +49,6 @@ function createWindow() {
     skipTaskbar: true,
   });
   mainWindow.maximize();
-  mainWindow.focus();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
@@ -38,6 +62,7 @@ function createWindow() {
       level = "floating";
     }
     mainWindow.setAlwaysOnTop(true, level);
+    mainWindow.hide();
   }
 
   // and load the index.html of the app.
@@ -49,12 +74,15 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+  createTrayWindow();
   setupTray();
 
   app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    // On Mac, we may need to re-create the window when
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createTrayWindow();
+      createWindow();
+    }
   });
 });
 
@@ -76,6 +104,14 @@ function setupTray() {
 
   tray = new Tray(path.join(__dirname, "/icon.png"));
   tray.setToolTip("Daily");
+  tray.setIgnoreDoubleClickEvents(true);
+  tray.on("click", function (e) {
+    if (trayWindow.isVisible()) {
+      trayWindow.hide();
+    } else {
+      trayWindow.show();
+    }
+  });
   setupTrayMenu(false);
 }
 
@@ -84,7 +120,7 @@ function setupTrayMenu(inCall) {
 
   // If the user is not in a call and the window is minimized,
   // show "Join Call" button to display the join form.
-  if (!inCall && !mainWindow.isVisible()) {
+  if (!inCall && !trayWindow.isVisible()) {
     const item = new MenuItem({
       label: "Join Call",
       type: "normal",
@@ -119,8 +155,23 @@ function setupTrayMenu(inCall) {
 }
 
 // Our custom API handlers are defined below.
-ipcMain.handle("refresh-tray", (e, inCall) => {
-  setupTrayMenu(inCall);
+ipcMain.handle("join-call", (e, url, name) => {
+  mainWindow.webContents.send("join-call", { url: url, name: name });
+});
+
+ipcMain.handle("joined-call", (e, url) => {
+  console.log("invoking joined call");
+  trayWindow.webContents.send("joined-call", { url: url });
+  setupTrayMenu(true);
+  mainWindow.show();
+  mainWindow.focus();
+});
+
+ipcMain.handle("left-call", (e, url) => {
+  console.log("invoking left call");
+  setupTrayMenu(false);
+  trayWindow.webContents.send("left-call");
+  mainWindow.hide();
 });
 
 ipcMain.handle("minimize", (e) => {

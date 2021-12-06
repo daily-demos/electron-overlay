@@ -1,0 +1,128 @@
+html,
+body {
+  height: 100% - 1rem;
+  width: 100% - 1rem;
+  font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
+}
+
+#wrapper {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+
+  position: absolute;
+  width: 100% - 1rem;
+  height: 100% - 1rem;
+
+  background: rgba(245, 245, 245, 0.6);
+  border: 0.5px solid rgba(0, 0, 0, 0.38);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(36px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 5px;
+}
+
+#entry {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  width: 100%;
+  /* width: 248px;
+  height: 256px; */
+  /*  left: 16px;
+  top: 16px; */
+
+  /* margin: 24px 0px; */
+}
+
+#enterCall {
+  width: 100%;
+}
+
+#inCall {
+  display: none;
+}
+
+#entry {
+  width: 100%;
+}
+
+#entry h2 {
+  /* Create video call */
+  position: static;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+
+  /* Light UI/accentText */
+  color: #121a24;
+}
+
+#enterCall .formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  margin-top: 16px;
+  width: 100%;
+
+  position: static;
+  left: 0px;
+}
+
+#enterCall label {
+  position: static;
+
+  /* Dashboard / Base Strong */
+  font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 133% */
+
+  /* Light UI/accentText */
+  color: #121a24;
+}
+
+#enterCall input {
+  position: static;
+  height: 40px;
+  left: 0px;
+  /* Core/White */
+  background: #ffffff;
+  opacity: 0.6;
+  border-radius: 4px;
+  width: 100%;
+}
+
+#enterCall button {
+  /* Medium */
+
+  /* Auto Layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  position: static;
+  height: 32px;
+  left: 0px;
+
+  /* Light UI/accent */
+  background: #1bebb9;
+  border-radius: 8px;
+}

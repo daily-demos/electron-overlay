@@ -42,15 +42,25 @@ ipcRenderer.on("leave-call", () => {
   window.dispatchEvent(new Event("leave-call"));
 });
 
+ipcRenderer.on("join-call", (e, arg) => {
+  const event = new CustomEvent("join-call", {
+    detail: {
+      url: arg.url,
+      name: arg.name,
+    },
+  });
+  window.dispatchEvent(event);
+});
+
 // Expose the close function to the main world.
 contextBridge.exposeInMainWorld("api", {
   close: () => {
     ipcRenderer.invoke("close-app");
   },
-  refreshTray: (inCall) => {
-    ipcRenderer.invoke("refresh-tray", inCall);
+  joinedCall: (url) => {
+    ipcRenderer.invoke("joined-call", url);
   },
-  minimize: () => {
-    ipcRenderer.invoke("minimize");
+  leftCall: () => {
+    ipcRenderer.invoke("left-call");
   },
 });

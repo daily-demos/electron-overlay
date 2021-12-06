@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <link href="./trayStyles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="entry">
+        <h2>Join a video call</h2>
+        <form id="enterCall">
+          <span class="formContainer">
+            <label>Your Name:</label>
+            <input type="text" id="userName" required="true" />
+          </span>
+          <span class="formContainer">
+            <label>Room URL: </label>
+            <input type="text" id="roomURL" required="true" />
+          </span>
+          <button type="submit">Join Call</button>
+        </form>
+      </div>
+      <div id="inCall">
+        <h2>Invite others to call</h2>
+        <p>Copy and share URL with others to invite them to this call</p>
+      </div>
+      <div id="footer"></div>
+    </div>
+    <script src="./renderer/tray/tray.js" type="module"></script>
+  </body>
+</html>

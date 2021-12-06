@@ -13,30 +13,17 @@
   <body>
     <div id="wrapper">
       <div id="nav" class="clickable" draggable="true">
-        <div id="entry">
-          <form id="enterCall">
-            <label
-              >Your Name: <input type="text" id="userName" required="true"
-            /></label>
-            <label
-              >Room URL: <input type="text" id="roomURL" required="true"
-            /></label>
-            <button type="submit">Join</button>
-          </form>
-          <button id="minimize">Minimize</button>
-        </div>
         <div id="callControls">
           <button id="leave">Leave Call</button>
           <button id="toggleCam">Enable Camera</button>
           <button id="toggleMic">Enable Mic</button>
         </div>
-        <button id="exit">Exit</button>
       </div>
 
       <div id="tiles"></div>
     </div>
     <!-- You can also require other files to run in this process -->
     <script src="https://unpkg.com/@daily-co/daily-js"></script>
-    <script src="./renderer/daily.js" type="module"></script>
+    <script src="./renderer/call/daily.js" type="module"></script>
   </body>
 </html>
