@@ -22,6 +22,7 @@ function createTrayWindow() {
     },
     width: 280,
     height: 288,
+    show: true,
     frame: false,
     autoHideMenuBar: true,
     transparent: true,
@@ -29,12 +30,13 @@ function createTrayWindow() {
   });
   trayWindow.loadFile("tray.html");
   trayWindow.on("blur", () => {
+    console.log("hiding");
     trayWindow.hide();
   });
   trayWindow.on("show", () => {
+    console.log("focusing");
     trayWindow.focus();
   });
-  trayWindow.show();
 }
 
 function createWindow() {
@@ -48,7 +50,6 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
-  mainWindow.maximize();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
@@ -61,9 +62,10 @@ function createWindow() {
     if (process.platform === "darwin") {
       level = "floating";
     }
+
     mainWindow.setAlwaysOnTop(true, level);
-    mainWindow.hide();
   }
+  mainWindow.hide();
 
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
@@ -76,14 +78,6 @@ app.whenReady().then(() => {
   createWindow();
   createTrayWindow();
   setupTray();
-
-  app.on("activate", function () {
-    // On Mac, we may need to re-create the window when
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createTrayWindow();
-      createWindow();
-    }
-  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -107,6 +101,7 @@ function setupTray() {
   tray.setIgnoreDoubleClickEvents(true);
   tray.on("click", function (e) {
     if (trayWindow.isVisible()) {
+      console.log("hiding");
       trayWindow.hide();
     } else {
       trayWindow.show();
@@ -160,6 +155,7 @@ ipcMain.handle("join-call", (e, url, name) => {
 });
 
 ipcMain.handle("joined-call", (e, url) => {
+  mainWindow.maximize();
   console.log("invoking joined call");
   trayWindow.webContents.send("joined-call", { url: url });
   setupTrayMenu(true);
