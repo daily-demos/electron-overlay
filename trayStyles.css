@@ -13,9 +13,9 @@ body {
   padding: 16px;
 
   position: absolute;
-  width: 100% - 1rem;
-  height: 100% - 1rem;
-
+  width: 280px;
+  height: 288px;
+  overflow: hidden;
   background: rgba(245, 245, 245, 0.6);
   border: 0.5px solid rgba(0, 0, 0, 0.38);
   box-sizing: border-box;
@@ -122,15 +122,9 @@ body {
   border-radius: 8px;
 }
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
 #footer {
+  justify-content: space-between;
+  display: flex;
   /* Dashboard / Base */
   font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
   font-style: normal;

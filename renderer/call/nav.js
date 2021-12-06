@@ -50,11 +50,25 @@ export function updateCallControls(inCall) {
 }
 
 export function updateCamBtn(camOn) {
-  const txt = (camOn ? "Disable" : "Enable") + " Camera";
-  toggleCamBtn.innerText = txt;
+  if (camOn && !toggleCamBtn.classList.contains("cam-on")) {
+    toggleCamBtn.classList.remove("cam-off");
+    toggleCamBtn.classList.add("cam-on");
+  }
+  if (!camOn && !toggleCamBtn.classList.contains("cam-off")) {
+    toggleCamBtn.classList.remove("cam-on");
+    toggleCamBtn.classList.add("cam-off");
+  }
 }
 
 export function updateMicBtn(micOn) {
-  const txt = (micOn ? "Disable" : "Enable") + " Mic";
-  toggleMicBtn.innerText = txt;
+  if (micOn && !toggleMicBtn.classList.contains("mic-on")) {
+    toggleMicBtn.classList.remove("mic-off");
+    toggleMicBtn.classList.add("mic-on");
+  }
+  if (!micOn && !toggleMicBtn.classList.contains("mic-off")) {
+    toggleMicBtn.classList.remove("mic-on");
+    toggleMicBtn.classList.add("mic-off");
+  }
+  //const txt = (micOn ? "Disable" : "Enable") + " Mic";
+  //toggleMicBtn.innerText = txt;
 }

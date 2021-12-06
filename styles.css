@@ -23,7 +23,7 @@ body {
   width: 100%;
 }
 
-#nav {
+/* #nav {
   display: inline-block;
   margin: auto;
   padding: 15px;
@@ -32,7 +32,7 @@ body {
   color: rgb(53, 48, 48);
   font-weight: 600;
   font-size: x-large;
-}
+} */
 
 #tiles .tile {
   /* -webkit-app-region: drag; */
@@ -47,6 +47,44 @@ video {
 
 #callControls {
   display: none;
+  flex-direction: row;
+  align-items: center;
+
+  position: absolute;
+  width: 265px;
+  height: 56px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  background: rgba(245, 245, 245, 0.6);
+  border: 0.5px solid rgba(0, 0, 0, 0.38);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(36px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 5px;
+}
+
+#nav button {
+  width: 25px;
+  height: 25px;
+  border: none;
+}
+
+.cam-on {
+  background-image: url("./assets/camera.svg");
+}
+
+.cam-off {
+  background-image: url("./assets/camera.svg");
+}
+
+.mic-on {
+  background-image: url("./assets/microphone.svg");
+}
+
+.mic-off {
+  background-image: url("./assets/microphone-off.svg");
 }
 
 #localParticipant {
@@ -83,7 +121,7 @@ video {
   border-width: 4px;
   border-style: solid;
 }
-
+/*
 #nav button {
   display: inline-block;
   font-weight: 300;
@@ -102,3 +140,4 @@ video {
 #nav button[disabled] {
   background-color: var(--dark-grey);
 }
+*/

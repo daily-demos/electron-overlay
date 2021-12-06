@@ -20,8 +20,8 @@ function createTrayWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preloadTray.js"),
     },
-    width: 280,
-    height: 288,
+    width: 290,
+    height: 295,
     show: true,
     frame: false,
     autoHideMenuBar: true,
@@ -50,7 +50,7 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
-  // mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
