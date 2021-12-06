@@ -1,7 +1,7 @@
 html,
 body {
-  height: 100% - 1rem;
-  width: 100% - 1rem;
+  height: 100%;
+  width: 100%;
   font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
 }
 
@@ -34,12 +34,6 @@ body {
 
   position: static;
   width: 100%;
-  /* width: 248px;
-  height: 256px; */
-  /*  left: 16px;
-  top: 16px; */
-
-  /* margin: 24px 0px; */
 }
 
 #enterCall {
@@ -62,6 +56,7 @@ body {
   font-weight: normal;
   font-size: 16px;
   line-height: 16px;
+  margin: 0;
 
   /* Light UI/accentText */
   color: #121a24;
@@ -125,4 +120,26 @@ body {
   /* Light UI/accent */
   background: #1bebb9;
   border-radius: 8px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+#footer {
+  /* Dashboard / Base */
+  font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  width: 100%;
+  /* identical to box height, or 133% */
+
+  /* Light UI/accentText */
+  color: #121a24;
 }
