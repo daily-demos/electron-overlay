@@ -32,8 +32,8 @@ export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
 
   // Stream the given tracks to the participant's video
   // and audio tags
-  stream(videoTag, videoTrack);
-  stream(audioTag, audioTrack);
+  streamVideo(videoTag, videoTrack);
+  streamAudio(audioTag, audioTrack);
 }
 
 // addTile adds a participant tile for the given ID and username.
@@ -80,13 +80,40 @@ function addTile(id, userName) {
   return { video: video, audio: audio };
 }
 
-function stream(tag, track) {
+function streamVideo(tag, track) {
   if (track === null) {
     tag.srcObject = null;
     return;
   }
+  if (track.id === getVideoTrackID(tag)) {
+    return;
+  }
   let stream = new MediaStream([track]);
   tag.srcObject = stream;
+}
+
+function streamAudio(tag, track) {
+  if (track === null) {
+    tag.srcObject = null;
+    return;
+  }
+  if (track.id === getAudioTrackID(tag)) {
+    return;
+  }
+  let stream = new MediaStream([track]);
+  tag.srcObject = stream;
+}
+
+function getVideoTrackID(tag) {
+  const tracks = tag?.srcObject?.getVideoTracks();
+  if (!tracks || tracks.length === 0) return -1;
+  return tracks[0].id;
+}
+
+function getAudioTrackID(tag) {
+  const tracks = tag?.srcObject?.getAudioTracks();
+  if (!tracks || tracks.length === 0) return -1;
+  return tracks[0].id;
 }
 
 export function removeTile(id) {
