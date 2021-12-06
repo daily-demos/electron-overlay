@@ -36,6 +36,22 @@ export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
   streamAudio(audioTag, audioTrack);
 }
 
+export function updateActiveSpeaker(activeSpeakerID) {
+  // Get current active speaker tiles. There should always
+  // be a max of one, but go through all and remove their
+  // speaker class just in case
+  const speakerClassName = "speaker";
+  const speakers = document.getElementsByClassName(speakerClassName);
+  for (let s of speakers) {
+    s.classList.remove(speakerClassName);
+  }
+
+  const tileID = getTileID(activeSpeakerID);
+  const tile = document.getElementById(tileID);
+  console.log("gotTile", tileID, tile);
+  tile?.classList.add(speakerClassName);
+}
+
 // addTile adds a participant tile for the given ID and username.
 function addTile(id, userName) {
   // Create participant element
@@ -47,10 +63,10 @@ function addTile(id, userName) {
 
   // Create tile which will contain the video
   const tile = document.createElement("div");
-  tile.id = `tile-${id}`;
+  tile.id = getTileID(id);
   tile.classList.add("clickable", "tile");
 
-  tile.style.backgroundImage = generateLinearGradient();
+  tile.style.backgroundImage = "linear-gradient(45deg, #121A24, #2B3F56)";
 
   // Create name element
   const name = document.createElement("div");
@@ -140,12 +156,6 @@ function getParticipantID(id) {
   return `participant-${id}`;
 }
 
-function generateLinearGradient() {
-  const c1 = Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, "0");
-  const c2 = Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, "0");
-  return `linear-gradient(45deg, #${c1}, #${c2})`;
+function getTileID(id) {
+  return `tile-${id}`;
 }

@@ -9,7 +9,12 @@ import {
   updateCallControls,
   updateMicBtn,
 } from "./nav.js";
-import { addOrUpdateTile, removeAllTiles, removeTile } from "./tile.js";
+import {
+  addOrUpdateTile,
+  removeAllTiles,
+  removeTile,
+  updateActiveSpeaker,
+} from "./tile.js";
 
 const playableState = "playable";
 
@@ -36,7 +41,8 @@ async function initAndJoin(roomURL, name) {
     .on("error", handleError)
     .on("participant-updated", handleParticipantUpdated)
     .on("participant-joined", handleParticipantJoined)
-    .on("participant-left", handleParticipantLeft);
+    .on("participant-left", handleParticipantLeft)
+    .on("active-speaker-change", handleActiveSpeakerChange);
   try {
     console.log("Joining " + roomURL);
     await callObject.join({ url: roomURL, userName: name });
@@ -111,6 +117,11 @@ function getParticipantTracks(participant) {
 function handleParticipantLeft(event) {
   const up = event.participant;
   removeTile(up.session_id);
+}
+
+function handleActiveSpeakerChange(event) {
+  console.log("active speaker change", event.activeSpeaker.peerId);
+  updateActiveSpeaker(event.activeSpeaker.peerId);
 }
 
 function updateLocal(p) {

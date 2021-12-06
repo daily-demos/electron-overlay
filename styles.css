@@ -78,6 +78,12 @@ video {
   object-fit: cover;
 }
 
+.speaker {
+  border-color: #fad71f;
+  border-width: 4px;
+  border-style: solid;
+}
+
 #nav button {
   display: inline-block;
   font-weight: 300;

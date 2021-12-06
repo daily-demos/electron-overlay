@@ -50,6 +50,7 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
+  // mainWindow.openDevTools();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
@@ -64,8 +65,8 @@ function createWindow() {
     }
 
     mainWindow.setAlwaysOnTop(true, level);
+    mainWindow.hide();
   }
-  mainWindow.hide();
 
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
