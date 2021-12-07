@@ -4,9 +4,9 @@ import { setupDraggableElement } from "./drag.js";
 
 const toggleCamBtn = document.getElementById("toggleCam");
 const toggleMicBtn = document.getElementById("toggleMic");
-const nav = document.getElementById("nav");
+const callControls = document.getElementById("callControls");
 
-setupDraggableElement(nav);
+setupDraggableElement(callControls);
 
 export function registerJoinListener(f) {
   window.addEventListener("join-call", (e) => {
@@ -15,6 +15,7 @@ export function registerJoinListener(f) {
     f(url, name).then((joined) => {
       if (joined) {
         api.joinedCall(url);
+        updateClipboardBtnClick(url);
       }
     });
   });
@@ -25,6 +26,7 @@ export function registerLeaveBtnListener(f) {
   const leave = () => {
     f();
     api.leftCall();
+    updateClipboardBtnClick(null);
   };
   leaveBtn.addEventListener("click", leave);
   window.addEventListener("leave-call", leave);
@@ -69,6 +71,19 @@ export function updateMicBtn(micOn) {
     toggleMicBtn.classList.remove("mic-on");
     toggleMicBtn.classList.add("mic-off");
   }
-  //const txt = (micOn ? "Disable" : "Enable") + " Mic";
-  //toggleMicBtn.innerText = txt;
+}
+
+function updateClipboardBtnClick(callURL) {
+  const clipboardBtn = document.getElementById("clipboard");
+  if (!callURL) {
+    clipboardBtn.onclick = null;
+    return;
+  }
+  clipboardBtn.onclick = () => {
+    navigator.clipboard.writeText(callURL).catch((err) => {
+      const msg = "failed to copy room URL to clipboard";
+      console.error(msg, err);
+      alert(msg);
+    });
+  };
 }

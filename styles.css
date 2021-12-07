@@ -21,18 +21,9 @@ body {
 #wrapper {
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
-
-/* #nav {
-  display: inline-block;
-  margin: auto;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.7);
-  color: rgb(53, 48, 48);
-  font-weight: 600;
-  font-size: x-large;
-} */
 
 #tiles .tile {
   /* -webkit-app-region: drag; */
@@ -51,10 +42,11 @@ video {
   align-items: center;
 
   position: absolute;
+
   width: 265px;
   height: 56px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 
   background: rgba(245, 245, 245, 0.6);
   border: 0.5px solid rgba(0, 0, 0, 0.38);
@@ -65,10 +57,32 @@ video {
   border-radius: 5px;
 }
 
-#nav button {
+#toggleCam,
+#toggleMic,
+#clipboard {
   width: 25px;
   height: 25px;
   border: none;
+}
+
+#leave {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  background: #f63135;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  border: none;
+  width: 89px;
+  height: 32px;
+}
+
+#callControls button {
+  margin: 0 8px;
 }
 
 .cam-on {
@@ -85,6 +99,10 @@ video {
 
 .mic-off {
   background-image: url("./assets/microphone-off.svg");
+}
+
+#clipboard {
+  background-image: url("./assets/invite.svg");
 }
 
 #localParticipant {
