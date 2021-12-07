@@ -48,8 +48,10 @@ export function updateActiveSpeaker(activeSpeakerID) {
 
   const tileID = getTileID(activeSpeakerID);
   const tile = document.getElementById(tileID);
-  console.log("gotTile", tileID, tile);
+  const name = document.getElementById(getNameID(activeSpeakerID));
+
   tile?.classList.add(speakerClassName);
+  name?.classList.add(speakerClassName);
 }
 
 // addTile adds a participant tile for the given ID and username.
@@ -71,11 +73,12 @@ function addTile(id, userName) {
   // Create name element
   const name = document.createElement("div");
   let n = userName ? userName : id;
+  name.id = getNameID(id);
   name.innerText = n;
   name.classList.add("name");
 
-  participant.appendChild(name);
   participant.appendChild(tile);
+  participant.appendChild(name);
 
   // Create video element
   const video = document.createElement("video");
@@ -158,4 +161,8 @@ function getParticipantID(id) {
 
 function getTileID(id) {
   return `tile-${id}`;
+}
+
+function getNameID(id) {
+  return `name-${id}`;
 }
