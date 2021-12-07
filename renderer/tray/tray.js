@@ -6,10 +6,10 @@ joinForm.addEventListener("submit", (event) => {
   const urlEle = document.getElementById("roomURL");
   const nameEle = document.getElementById("userName");
   api.joinCall(urlEle.value, nameEle.value);
+  setupInCallView(urlEle.value);
 });
 
-window.addEventListener("joined-call", (e) => {
-  callURL = e.detail.url;
+function setupInCallView(callURL) {
   const entry = document.getElementById("entry");
   const inCall = document.getElementById("inCall");
   entry.style.display = "none";
@@ -26,7 +26,7 @@ window.addEventListener("joined-call", (e) => {
       alert(msg);
     });
   };
-});
+}
 
 window.addEventListener("left-call", (e) => {
   callURL = null;

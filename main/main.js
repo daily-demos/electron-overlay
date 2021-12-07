@@ -9,7 +9,7 @@ const {
 } = require("electron");
 const path = require("path");
 
-let mainWindow = null;
+let callWindow = null;
 let trayWindow = null;
 let tray = null;
 
@@ -37,9 +37,9 @@ function createTrayWindow() {
   });
 }
 
-function createWindow() {
+function createCallWindow() {
   // Create the browser window.dsfdsfs
-  mainWindow = new BrowserWindow({
+  callWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
@@ -48,12 +48,12 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
-  //  mainWindow.openDevTools();
+  //  callWindow.openDevTools();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
-    mainWindow.setIgnoreMouseEvents(true, { forward: true });
-    mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    callWindow.setIgnoreMouseEvents(true, { forward: true });
+    callWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
     let level = "normal";
     // Mac OS requires a different level for our drag/drop and overlay
@@ -62,19 +62,19 @@ function createWindow() {
       level = "floating";
     }
 
-    mainWindow.setAlwaysOnTop(true, level);
-    mainWindow.hide();
+    callWindow.setAlwaysOnTop(true, level);
+    callWindow.hide();
   }
 
   // and load the index.html of the app.
-  mainWindow.loadFile("index.html");
+  callWindow.loadFile("index.html");
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow();
+  createCallWindow();
   createTrayWindow();
   setupTray();
 });
@@ -119,23 +119,14 @@ function setupTrayMenu(inCall) {
 
   // If the user is not in a call and the window is minimized,
   // show "Join Call" button to display the join form.
-  if (!inCall && !trayWindow.isVisible()) {
-    const item = new MenuItem({
-      label: "Join Call",
-      type: "normal",
-      click() {
-        mainWindow.show();
-      },
-    });
-    menuItems.push(item);
-  } else if (inCall) {
+  if (inCall) {
     // If the user is in a call, allow them to leave the call
     // via the context menu
     const item = new MenuItem({
       label: "Leave Call",
       type: "normal",
       click() {
-        mainWindow.webContents.send("leave-call");
+        callWindow.webContents.send("leave-call");
       },
     });
     menuItems.push(item);
@@ -156,23 +147,23 @@ function setupTrayMenu(inCall) {
 
 // Our custom API handlers are defined below.
 ipcMain.handle("join-call", (e, url, name) => {
-  mainWindow.webContents.send("join-call", { url: url, name: name });
+  callWindow.webContents.send("join-call", { url: url, name: name });
 });
 
 ipcMain.handle("joined-call", (e, url) => {
-  mainWindow.maximize();
+  callWindow.maximize();
   console.log("invoking joined call");
   trayWindow.webContents.send("joined-call", { url: url });
   setupTrayMenu(true);
-  mainWindow.show();
-  mainWindow.focus();
+  callWindow.show();
+  callWindow.focus();
 });
 
 ipcMain.handle("left-call", (e, url) => {
   console.log("invoking left call");
   setupTrayMenu(false);
   trayWindow.webContents.send("left-call");
-  mainWindow.hide();
+  callWindow.hide();
 });
 
 ipcMain.handle("minimize", (e) => {

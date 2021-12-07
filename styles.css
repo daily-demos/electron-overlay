@@ -36,8 +36,15 @@ video {
   border-radius: 25px;
 }
 
-#callControls {
+.controls-off {
   display: none;
+}
+
+.controls-on {
+  display: flex;
+}
+
+#callControls {
   flex-direction: row;
   align-items: center;
 
@@ -45,8 +52,6 @@ video {
 
   width: 265px;
   height: 56px;
-  padding-top: 12px;
-  padding-bottom: 12px;
 
   background: rgba(245, 245, 245, 0.6);
   border: 0.5px solid rgba(0, 0, 0, 0.38);
@@ -57,12 +62,29 @@ video {
   border-radius: 5px;
 }
 
+#callControls #controller {
+  margin: 0 8px;
+  flex: auto;
+}
+
+#callControls #line {
+  height: 0px;
+  width: 54px;
+  opacity: 0.4;
+  border: 1px solid #6b7785;
+  transform: rotate(90deg);
+  position: absolute;
+  left: -5px;
+  top: 26px;
+}
+
 #toggleCam,
 #toggleMic,
 #clipboard {
   width: 25px;
   height: 25px;
   border: none;
+  background-color: transparent;
 }
 
 #leave {
