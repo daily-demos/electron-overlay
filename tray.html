@@ -3,7 +3,7 @@
     <link href="./trayStyles.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="wrapper">
+    <div id="wrapper" class="entry">
       <div id="entry">
         <h2>Join a video call</h2>
         <form id="enterCall">
@@ -21,10 +21,13 @@
       <div id="inCall">
         <h2>Invite others to call</h2>
         <p>Copy and share URL with others to invite them to this call</p>
+        <button id="clipboard">Copy to clipboard</button>
       </div>
       <div id="footer">
         <img src="./assets/daily.svg" alt="Daily logo" />
-        A demo from Daily
+        <span
+          >A demo from <a href="https://daily.co" target="new">Daily</a></span
+        >
       </div>
     </div>
     <script src="./renderer/tray/tray.js" type="module"></script>

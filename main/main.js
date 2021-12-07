@@ -30,11 +30,9 @@ function createTrayWindow() {
   });
   trayWindow.loadFile("tray.html");
   trayWindow.on("blur", () => {
-    console.log("hiding");
     trayWindow.hide();
   });
   trayWindow.on("show", () => {
-    console.log("focusing");
     trayWindow.focus();
   });
 }
@@ -50,7 +48,7 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
   });
-  mainWindow.openDevTools();
+  //  mainWindow.openDevTools();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
@@ -97,18 +95,23 @@ function setupTray() {
     app.dock.hide();
   }
 
-  tray = new Tray(path.join(__dirname, "/icon.png"));
+  tray = new Tray(path.join(__dirname, "../assets/tray.png"));
   tray.setToolTip("Daily");
+  setupTrayMenu(false);
+
   tray.setIgnoreDoubleClickEvents(true);
   tray.on("click", function (e) {
+    console.log("clicked tray");
     if (trayWindow.isVisible()) {
-      console.log("hiding");
       trayWindow.hide();
     } else {
       trayWindow.show();
     }
   });
-  setupTrayMenu(false);
+  tray.on("right-click", () => {
+    console.log("right click");
+    tray.popUpContextMenu(tray.contextMenu);
+  });
 }
 
 function setupTrayMenu(inCall) {
@@ -147,7 +150,8 @@ function setupTrayMenu(inCall) {
   menuItems.push(exitItem);
 
   const contextMenu = Menu.buildFromTemplate(menuItems);
-  tray.setContextMenu(contextMenu);
+  tray.contextMenu = contextMenu;
+  // tray.setContextMenu(contextMenu);
 }
 
 // Our custom API handlers are defined below.

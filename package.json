@@ -7,7 +7,7 @@
     "start": "electron .",
     "dev-start": "electron . -dev"
   },
-  "repository": "https://github.com/lizadaily/electron-test",
+  "repository": "https://github.com/daily-demos/electron-overlay",
   "keywords": [
     "Electron",
     "Daily",
