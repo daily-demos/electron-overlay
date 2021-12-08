@@ -1,13 +1,5 @@
 :root {
-  --grey-lightest: #f7f9fa;
-  --white: #ffffff;
-  --grey: #c8d1dc;
-  --dark-grey: #6b7785;
-  --dark-blue: #1f2d3d;
-  --dark-blue-border: #2b3f56;
-  --green: #72cc18;
-  --red-dark: #bb0c0c;
-  --font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
+  --font-family-graphik: Graphik, "Helvetica Neue", Sans-Serif;
 }
 
 html,
@@ -15,7 +7,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: var(--font-family);
+  font-family: var(--font-family-graphik);
 }
 
 #wrapper {
@@ -107,29 +99,24 @@ video {
   margin: 0 8px;
 }
 
-.cam-on {
+#callControls .cam-on {
   background-image: url("./assets/camera.svg");
 }
 
-.cam-off {
+#callControls .cam-off {
   background-image: url("./assets/camera-off.svg");
 }
 
-.mic-on {
+#callControls .mic-on {
   background-image: url("./assets/microphone.svg");
 }
 
-.mic-off {
+#callControls .mic-off {
   background-image: url("./assets/microphone-off.svg");
 }
 
 #clipboard {
   background-image: url("./assets/invite.svg");
-}
-
-#localParticipant {
-  display: none;
-  /*  -webkit-app-region: drag; */
 }
 
 .participant {
@@ -143,14 +130,13 @@ video {
 #tiles .name {
   color: rgb(53, 48, 48);
   font-weight: 600;
+  background: #121a24;
   font-size: large;
   padding: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
-  background: #121a24;
-  display: inline-block;
+  display: flex;
   border-radius: 8px;
-  font-family: "SF UI Text";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -163,6 +149,31 @@ video {
 
 #tiles .name.speaker {
   background: #fad71f;
+}
+
+#tiles #mic-off {
+  background-image: url("./assets/tile-mic-off.svg");
+  width: 16px;
+  height: 16px;
+  display: none;
+}
+
+#tiles #mic-off.show {
+  display: flex;
+}
+
+#tiles #cam-off {
+  background-image: url("./assets/tile-cam-off.svg");
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: calc(150px / 2 - 32px / 2);
+  left: calc(150px / 2 - 32px / 2);
+  display: none;
+}
+
+#tiles #cam-off.show {
+  display: flex;
 }
 
 .fit {

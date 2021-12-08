@@ -4,7 +4,13 @@ import { setupDraggableElement } from "./drag.js";
 
 // addOrUpdateTile adds a tile for a participant, or updates a tile
 // if it already exists.
-export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
+export function addOrUpdateTile(
+  id,
+  userName,
+  videoTrack,
+  audioTrack,
+  isLocal = false
+) {
   const videoTagID = getVideoID(id);
   let videoTag = null;
 
@@ -17,41 +23,61 @@ export function addOrUpdateTile(id, userName, videoTrack, audioTrack) {
   // If the participant already exists, make sure the displayed name
   // is up to date and get their video tag.
   if (participant) {
-    const name = participant.getElementsByClassName("name")[0];
-    if (name.innerText != userName) {
-      name.innerText = userName;
+    const nameTag = document.getElementById(getNameID(id));
+    if (nameTag.innerText != userName) {
+      nameTag.innerText = userName;
     }
     videoTag = document.getElementById(videoTagID);
     audioTag = document.getElementById(audioTagID);
   } else {
     // If the participant does not already exist, create their tile.
     const tags = addTile(id, userName);
+    participant = tags.participant;
     videoTag = tags.video;
     audioTag = tags.audio;
+    if (isLocal) {
+      audioTag.volume = 0;
+    }
   }
 
   // Stream the given tracks to the participant's video
   // and audio tags
   streamVideo(videoTag, videoTrack);
   streamAudio(audioTag, audioTrack);
+
+  // Update the media-off icon class depending on whether
+  // we have a stream
+  const camOffDiv = participant.querySelector("#cam-off");
+  setIconVisibility(camOffDiv, videoTag);
+
+  const micOffDiv = participant.querySelector("#mic-off");
+  setIconVisibility(micOffDiv, videoTag);
+}
+
+function setIconVisibility(iconDiv, mediaTag) {
+  if (mediaTag.srcObject) {
+    iconDiv.classList.remove("show");
+  } else {
+    iconDiv.classList.add("show");
+  }
 }
 
 export function updateActiveSpeaker(activeSpeakerID) {
-  // Get current active speaker tiles. There should always
-  // be a max of one, but go through all and remove their
-  // speaker class just in case
+  // Get current active speaker elements
   const speakerClassName = "speaker";
   const speakers = document.getElementsByClassName(speakerClassName);
-  for (let s of speakers) {
+  Array.from(speakers).forEach((s) => {
     s.classList.remove(speakerClassName);
-  }
+  });
 
   const tileID = getTileID(activeSpeakerID);
   const tile = document.getElementById(tileID);
-  const name = document.getElementById(getNameID(activeSpeakerID));
 
-  tile?.classList.add(speakerClassName);
-  name?.classList.add(speakerClassName);
+  if (!tile) return;
+
+  const name = document.getElementById(getNameID(activeSpeakerID));
+  tile.classList.add(speakerClassName);
+  name.classList.add(speakerClassName);
 }
 
 // addTile adds a participant tile for the given ID and username.
@@ -80,6 +106,12 @@ function addTile(id, userName) {
   participant.appendChild(tile);
   participant.appendChild(name);
 
+  // Create mic-off image, which we
+  // will hide or show depending on stream status
+  const micOffImg = document.createElement("div");
+  micOffImg.id = "mic-off";
+  name.appendChild(micOffImg);
+
   // Create video element
   const video = document.createElement("video");
   video.id = getVideoID(id);
@@ -93,10 +125,14 @@ function addTile(id, userName) {
   audio.autoplay = true;
   tile.appendChild(audio);
 
+  const camOffImg = document.createElement("div");
+  camOffImg.id = "cam-off";
+  tile.appendChild(camOffImg);
+
   const tiles = document.getElementById("tiles");
   tiles.appendChild(participant);
   setupDraggableElement(participant);
-  return { video: video, audio: audio };
+  return { participant: participant, video: video, audio: audio };
 }
 
 function streamVideo(tag, track) {
