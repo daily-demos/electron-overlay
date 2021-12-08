@@ -12,12 +12,14 @@ export function registerJoinListener(f) {
   window.addEventListener("join-call", (e) => {
     const url = e.detail.url;
     const name = e.detail.name;
-    f(url, name).then((joined) => {
-      if (joined) {
-        api.joinedCall(url);
-        updateClipboardBtnClick(url);
-      }
-    });
+    f(url, name)
+      .then((joined) => {
+        api.callJoinUpdate(joined);
+        if (joined) {
+          updateClipboardBtnClick(url);
+        }
+      })
+      .catch(() => api.callJoinUpdate(false));
   });
 }
 

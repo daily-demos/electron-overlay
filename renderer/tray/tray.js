@@ -28,7 +28,15 @@ function setupInCallView(callURL) {
   };
 }
 
+window.addEventListener("join-failure", (e) => {
+  resetTray();
+});
+
 window.addEventListener("left-call", (e) => {
+  resetTray();
+});
+
+function resetTray() {
   callURL = null;
   const entry = document.getElementById("entry");
   const inCall = document.getElementById("inCall");
@@ -37,4 +45,4 @@ window.addEventListener("left-call", (e) => {
   const wrapper = document.getElementById("wrapper");
   wrapper.classList.remove("inCall");
   wrapper.classList.add("entry");
-});
+}

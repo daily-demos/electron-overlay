@@ -57,8 +57,8 @@ contextBridge.exposeInMainWorld("api", {
   close: () => {
     ipcRenderer.invoke("close-app");
   },
-  joinedCall: (url) => {
-    ipcRenderer.invoke("joined-call", url);
+  callJoinUpdate: (joined) => {
+    ipcRenderer.invoke("call-join-update", joined);
   },
   leftCall: () => {
     ipcRenderer.invoke("left-call");

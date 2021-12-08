@@ -43,14 +43,17 @@ async function initAndJoin(roomURL, name) {
     .on("participant-joined", handleParticipantJoined)
     .on("participant-left", handleParticipantLeft)
     .on("active-speaker-change", handleActiveSpeakerChange);
-  try {
-    console.log("Joining " + roomURL);
-    await callObject.join({ url: roomURL, userName: name });
-    return true;
-  } catch (e) {
-    console.error(e);
-  }
-  return false;
+
+  return callObject
+    .join({ url: roomURL, userName: name })
+    .then(() => {
+      console.log("joined!)");
+      return true;
+    })
+    .catch((err) => {
+      alert(err);
+      return false;
+    });
 }
 
 async function leave() {
@@ -72,6 +75,7 @@ function handleCameraError(event) {
 }
 
 function handleError(event) {
+  console.log("got error");
   console.error(event);
 }
 

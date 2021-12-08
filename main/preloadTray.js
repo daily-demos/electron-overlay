@@ -8,12 +8,8 @@ window.addEventListener("DOMContentLoaded", () => {});
 // The main process will send a "leave-call" event when the user clicks
 // that button in the menu, and the preload will then dispatch a matching
 // event to the DOM.
-ipcRenderer.on("joined-call", (e, arg) => {
-  const event = new CustomEvent("joined-call", {
-    detail: {
-      url: arg.url,
-    },
-  });
+ipcRenderer.on("join-failure", () => {
+  const event = new Event("join-failure");
   window.dispatchEvent(event);
 });
 

@@ -21,7 +21,7 @@ function createTrayWindow() {
       preload: path.join(__dirname, "preloadTray.js"),
     },
     width: 290,
-    height: 295,
+    height: 300,
     show: true,
     frame: false,
     autoHideMenuBar: true,
@@ -48,7 +48,6 @@ function createCallWindow() {
     transparent: true,
     skipTaskbar: true,
   });
-  //  callWindow.openDevTools();
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
@@ -150,17 +149,19 @@ ipcMain.handle("join-call", (e, url, name) => {
   callWindow.webContents.send("join-call", { url: url, name: name });
 });
 
-ipcMain.handle("joined-call", (e, url) => {
+ipcMain.handle("call-join-update", (e, joined) => {
+  if (!joined) {
+    trayWindow.webContents.send("join-failure");
+    trayWindow.show();
+    return;
+  }
   callWindow.maximize();
-  console.log("invoking joined call");
-  trayWindow.webContents.send("joined-call", { url: url });
   setupTrayMenu(true);
   callWindow.show();
   callWindow.focus();
 });
 
-ipcMain.handle("left-call", (e, url) => {
-  console.log("invoking left call");
+ipcMain.handle("left-call", (e) => {
   setupTrayMenu(false);
   trayWindow.webContents.send("left-call");
   callWindow.hide();

@@ -17,6 +17,11 @@ body {
   justify-content: center;
 }
 
+#tiles {
+  position: absolute;
+  top: 60px;
+}
+
 #tiles .tile {
   /* -webkit-app-region: drag; */
   width: 150px;
@@ -50,13 +55,20 @@ video {
   box-sizing: border-box;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(36px);
-  /* Note: backdrop-filter has minimal browser support */
   border-radius: 5px;
 }
 
 #callControls #controller {
   margin: 0 8px;
   flex: auto;
+}
+
+#callControls #dots {
+  background-image: url(./assets/controller.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 8px;
+  height: 56px;
 }
 
 #callControls #line {
@@ -66,17 +78,24 @@ video {
   border: 1px solid #6b7785;
   transform: rotate(90deg);
   position: absolute;
-  left: -5px;
+  left: -3px;
   top: 26px;
 }
 
 #toggleCam,
 #toggleMic,
 #clipboard {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border: none;
   background-color: transparent;
+}
+
+#toggleCam:hover,
+#toggleMic:hover,
+#clipboard:hover {
+  background: rgba(245, 245, 245, 0.6);
+  border-radius: 4px;
 }
 
 #leave {
@@ -91,7 +110,7 @@ video {
   align-items: center;
   padding: 8px 16px;
   border: none;
-  width: 89px;
+  width: 95px;
   height: 32px;
 }
 
@@ -101,22 +120,32 @@ video {
 
 #callControls .cam-on {
   background-image: url("./assets/camera.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #callControls .cam-off {
   background-image: url("./assets/camera-off.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #callControls .mic-on {
   background-image: url("./assets/microphone.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #callControls .mic-off {
   background-image: url("./assets/microphone-off.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #clipboard {
   background-image: url("./assets/invite.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .participant {
