@@ -3,6 +3,7 @@ body {
   height: 100%;
   width: 100%;
   font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
+  overflow: hidden;
 }
 
 #wrapper {

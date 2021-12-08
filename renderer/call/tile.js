@@ -51,7 +51,7 @@ export function addOrUpdateTile(
   setIconVisibility(camOffDiv, videoTag);
 
   const micOffDiv = participant.querySelector("#mic-off");
-  setIconVisibility(micOffDiv, videoTag);
+  setIconVisibility(micOffDiv, audioTag);
 }
 
 function setIconVisibility(iconDiv, mediaTag) {
