@@ -13,17 +13,18 @@ body {
 #wrapper {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #tiles {
   position: relative;
-  top: 60px;
+  padding-top: 60px;
   display: flex;
   justify-content: center;
 }
 
 #tiles .tile {
-  /* -webkit-app-region: drag; */
   width: 120px;
   height: 120px;
   border-radius: 25px;
@@ -33,17 +34,15 @@ video {
   border-radius: 25px;
 }
 
-.controls-off {
-  display: none;
-}
-
-.controls-on {
+#callControls.controls-on {
   display: flex;
 }
 
 #callControls {
+  display: none;
   flex-direction: row;
   align-items: center;
+  z-index: 100;
 
   position: absolute;
 

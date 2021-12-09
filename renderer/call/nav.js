@@ -47,12 +47,10 @@ export function updateCallControls(inCall) {
   // If the user has joined a call, remove the call entry form
   // and display the call controls. Otherwise, do the opposite.
   if (inCall) {
-    controls.classList.remove("controls-off");
     controls.classList.add("controls-on");
     return;
   }
   controls.classList.remove("controls-on");
-  controls.classList.add("controls-off");
 }
 
 export function updateCamBtn(camOn) {

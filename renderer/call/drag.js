@@ -18,8 +18,8 @@ export function setupDraggableElement(element) {
 function drop(ev) {
   ev.preventDefault();
   const data = ev.dataTransfer.getData("targetID");
-  const relativeMouseX = ev.dataTransfer.getData("relativeMouseX");
-  const relativeMouseY = ev.dataTransfer.getData("relativeMouseY");
+  const relativeMouseX = parseInt(ev.dataTransfer.getData("relativeMouseX"));
+  const relativeMouseY = parseInt(ev.dataTransfer.getData("relativeMouseY"));
 
   // Offset the new position based on the relative position of the mouse
   // which we saved on drag start.
