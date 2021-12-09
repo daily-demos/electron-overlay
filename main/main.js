@@ -38,7 +38,7 @@ function createTrayWindow() {
 }
 
 function createCallWindow() {
-  // Create the browser window.dsfdsfs
+  // Create the browser window.
   callWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -47,6 +47,7 @@ function createCallWindow() {
     autoHideMenuBar: true,
     transparent: true,
     skipTaskbar: true,
+    hasShadow: false,
   });
 
   const dev = app.commandLine.hasSwitch("dev");
@@ -95,12 +96,11 @@ function setupTray() {
   }
 
   tray = new Tray(path.join(__dirname, "../assets/tray.png"));
-  tray.setToolTip("Daily");
   setupTrayMenu(false);
 
+  tray.setToolTip("Daily");
   tray.setIgnoreDoubleClickEvents(true);
   tray.on("click", function (e) {
-    console.log("clicked tray");
     if (trayWindow.isVisible()) {
       trayWindow.hide();
     } else {
@@ -108,7 +108,6 @@ function setupTray() {
     }
   });
   tray.on("right-click", () => {
-    console.log("right click");
     tray.popUpContextMenu(tray.contextMenu);
   });
 }
@@ -141,14 +140,21 @@ function setupTrayMenu(inCall) {
 
   const contextMenu = Menu.buildFromTemplate(menuItems);
   tray.contextMenu = contextMenu;
-  // tray.setContextMenu(contextMenu);
 }
 
 // Our custom API handlers are defined below.
+
+// When a user fills in the call form from the tray window,
+// this handler will send the room URL and the user's chosen
+// name to the call window.
 ipcMain.handle("join-call", (e, url, name) => {
   callWindow.webContents.send("join-call", { url: url, name: name });
 });
 
+// When we get a success or failure status from the call
+// window when joining a call, this handler will send
+// the failure (if any) to the tray window, OR alternatively
+// maximize and focus the call window.
 ipcMain.handle("call-join-update", (e, joined) => {
   if (!joined) {
     trayWindow.webContents.send("join-failure");
@@ -161,23 +167,24 @@ ipcMain.handle("call-join-update", (e, joined) => {
   callWindow.focus();
 });
 
+// When a user leaves a call, this handler will update
+// the tray menu and send the event to the tray window
+// (so that the tray window can be updated to show the
+// join form once more)
 ipcMain.handle("left-call", (e) => {
   setupTrayMenu(false);
   trayWindow.webContents.send("left-call");
   callWindow.hide();
 });
 
-ipcMain.handle("minimize", (e) => {
+// This handler updates our mouse event settings depending
+// on whether the user is hovering over a clickable element
+// in the call window.
+ipcMain.handle("set-ignore-mouse-events", (e, ...args) => {
   const win = BrowserWindow.fromWebContents(e.sender);
-  win.hide();
-  setupTrayMenu();
+  win.setIgnoreMouseEvents(...args);
 });
 
 ipcMain.handle("close-app", () => {
   app.quit();
-});
-
-ipcMain.handle("set-ignore-mouse-events", (e, ...args) => {
-  const win = BrowserWindow.fromWebContents(e.sender);
-  win.setIgnoreMouseEvents(...args);
 });

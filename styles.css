@@ -13,13 +13,13 @@ body {
 #wrapper {
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 #tiles {
-  position: absolute;
+  position: relative;
   top: 60px;
+  display: flex;
+  justify-content: center;
 }
 
 #tiles .tile {
@@ -49,6 +49,8 @@ video {
 
   width: 265px;
   height: 56px;
+
+  left: calc(50% - 265px / 2);
 
   background: rgba(245, 245, 245, 0.6);
   border: 0.5px solid rgba(0, 0, 0, 0.38);
@@ -142,7 +144,7 @@ video {
   background-position: center;
 }
 
-#clipboard {
+#clipboard.invite {
   background-image: url("./assets/invite.svg");
   background-repeat: no-repeat;
   background-position: center;
@@ -152,8 +154,8 @@ video {
   position: relative;
   width: 150px;
   display: flex;
-  flex-flow: column;
   align-items: center;
+  justify-content: center;
 }
 
 #tiles .name {
