@@ -131,7 +131,7 @@ function setupTrayMenu(inCall) {
     menuItems.push(item);
   }
   const exitItem = new MenuItem({
-    label: "Exit",
+    label: "Quit",
     type: "normal",
     click() {
       app.quit();
