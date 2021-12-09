@@ -175,10 +175,12 @@ video {
   position: absolute;
   top: 103px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 #tiles .name.speaker {
   background: #fad71f;
+  color: #121a24;
 }
 
 #tiles #mic-off {
