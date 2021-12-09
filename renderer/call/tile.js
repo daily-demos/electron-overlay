@@ -49,6 +49,9 @@ export function addOrUpdateTile(
   // we have a stream
   const camOffDiv = participant.querySelector("#cam-off");
   setIconVisibility(camOffDiv, videoTag);
+  camOffDiv.classList.add("clickable");
+  camOffDiv.classList.add("draggable");
+  setupDraggableElement(camOffDiv);
 
   const micOffDiv = participant.querySelector("#mic-off");
   setIconVisibility(micOffDiv, audioTag);

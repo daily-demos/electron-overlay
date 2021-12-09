@@ -27,6 +27,7 @@ function createTrayWindow() {
     autoHideMenuBar: true,
     transparent: true,
     skipTaskbar: true,
+    hasShadow: false,
   });
   trayWindow.loadFile("tray.html");
   trayWindow.on("blur", () => {
