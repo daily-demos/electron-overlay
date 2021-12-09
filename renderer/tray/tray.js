@@ -1,5 +1,4 @@
 const joinForm = document.getElementById("enterCall");
-let callURL = null;
 
 joinForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -28,16 +27,15 @@ function setupInCallView(callURL) {
   };
 }
 
-window.addEventListener("join-failure", (e) => {
+window.addEventListener("join-failure", () => {
   resetTray();
 });
 
-window.addEventListener("left-call", (e) => {
+window.addEventListener("left-call", () => {
   resetTray();
 });
 
 function resetTray() {
-  callURL = null;
   const entry = document.getElementById("entry");
   const inCall = document.getElementById("inCall");
   entry.style.display = "block";

@@ -24,8 +24,8 @@ body {
 
 #tiles .tile {
   /* -webkit-app-region: drag; */
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 25px;
 }
 
@@ -152,7 +152,7 @@ video {
 
 .participant {
   position: relative;
-  width: 150px;
+  width: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,7 +174,7 @@ video {
   line-height: 16px;
   color: #ffffff;
   position: absolute;
-  top: 128px;
+  top: 103px;
   box-sizing: border-box;
 }
 
@@ -198,8 +198,8 @@ video {
   width: 32px;
   height: 32px;
   position: absolute;
-  top: calc(150px / 2 - 32px / 2);
-  left: calc(150px / 2 - 32px / 2);
+  top: calc(120px / 2 - 32px / 2);
+  left: calc(120px / 2 - 32px / 2);
   display: none;
 }
 

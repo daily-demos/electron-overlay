@@ -101,7 +101,7 @@ function setupTray() {
 
   tray.setToolTip("Daily");
   tray.setIgnoreDoubleClickEvents(true);
-  tray.on("click", function (e) {
+  tray.on("click", function () {
     if (trayWindow.isVisible()) {
       trayWindow.hide();
     } else {
@@ -172,7 +172,7 @@ ipcMain.handle("call-join-update", (e, joined) => {
 // the tray menu and send the event to the tray window
 // (so that the tray window can be updated to show the
 // join form once more)
-ipcMain.handle("left-call", (e) => {
+ipcMain.handle("left-call", () => {
   setupTrayMenu(false);
   trayWindow.webContents.send("left-call");
   callWindow.hide();
