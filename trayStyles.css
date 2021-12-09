@@ -1,8 +1,12 @@
+:root {
+  --font-family: "Roboto", "Helvetica Neue", Sans-Serif;
+}
+
 html,
 body {
   height: 100%;
   width: 100%;
-  font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
+  font-family: var(--font-family);
   overflow: hidden;
 }
 
@@ -83,7 +87,6 @@ p {
   position: static;
 
   /* Dashboard / Base Strong */
-  font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -129,7 +132,6 @@ button {
 #footer {
   justify-content: space-between;
   display: flex;
-  font-family: GraphikRegular, "Helvetica Neue", Sans-Serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

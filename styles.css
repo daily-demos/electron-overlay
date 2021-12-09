@@ -1,5 +1,5 @@
 :root {
-  --font-family-graphik: Graphik, "Helvetica Neue", Sans-Serif;
+  --font-family: "Roboto", "Helvetica Neue", Sans-Serif;
 }
 
 html,
@@ -7,7 +7,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: var(--font-family-graphik);
+  font-family: var(--font-family);
 }
 
 #wrapper {
