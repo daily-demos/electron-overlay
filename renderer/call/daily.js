@@ -47,7 +47,6 @@ async function initAndJoin(roomURL, name) {
   return callObject
     .join({ url: roomURL, userName: name })
     .then(() => {
-      console.log("joined!)");
       return true;
     })
     .catch((err) => {
