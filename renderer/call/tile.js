@@ -24,7 +24,7 @@ export function addOrUpdateTile(
   // is up to date and get their video tag.
   if (participant) {
     const nameTag = document.getElementById(getNameID(id));
-    if (nameTag.innerText != userName) {
+    if (userName && nameTag.innerText != userName) {
       nameTag.innerText = userName;
     }
     videoTag = document.getElementById(videoTagID);
