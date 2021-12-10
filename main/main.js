@@ -18,6 +18,7 @@ function createTrayWindow() {
   // Create the window that opens on app start
   // and tray click
   trayWindow = new BrowserWindow({
+    title: "Daily",
     webPreferences: {
       preload: path.join(__dirname, "preloadTray.js"),
     },
@@ -26,6 +27,7 @@ function createTrayWindow() {
     show: false,
     frame: false,
     autoHideMenuBar: true,
+    setVisibleOnAllWorkspaces: true,
     transparent: true,
     skipTaskbar: true,
     hasShadow: false,
@@ -46,6 +48,7 @@ function createTrayWindow() {
 function createCallWindow() {
   // Create the browser window.
   callWindow = new BrowserWindow({
+    title: "Daily",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
