@@ -1,6 +1,6 @@
 # Daily call object Electron demo
 
-This demo highlights [Daily's call object](https://www.daily.co/blog/prebuilt-ui/), and how it can be used to create an Electron video call app.
+This demo highlights [Daily's call object](https://docs.daily.co/guides/products/call-object), and how it can be used to create an Electron video call app.
 
 ## Prerequisites
 
@@ -24,5 +24,5 @@ Let us know how experimenting with this demo goes! Feel free to reach out to us 
 ## What's next
 
 - Try limiting the number of tiles that can appear by default on the screen, avoiding over-crowding in large calls.
-- Try adding a tile that always highlights the currently speaking user if they aren't already shown.
 - Try allowing users to increase the size of a tile (for example, maybe someone wants to increase a user's tile size when they are screen shaing?)
+- Experiment with adding ways for a user to snap or "tidy" their tiles into convenient layouts on the screen.
