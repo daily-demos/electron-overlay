@@ -8,6 +8,7 @@ const {
   MenuItem,
 } = require("electron");
 const path = require("path");
+const positioner = require("electron-traywindow-positioner");
 
 let callWindow = null;
 let trayWindow = null;
@@ -22,7 +23,7 @@ function createTrayWindow() {
     },
     width: 290,
     height: 300,
-    show: true,
+    show: false,
     frame: false,
     autoHideMenuBar: true,
     transparent: true,
@@ -34,7 +35,11 @@ function createTrayWindow() {
     trayWindow.hide();
   });
   trayWindow.on("show", () => {
+    positioner.position(trayWindow, tray.getBounds());
     trayWindow.focus();
+  });
+  trayWindow.webContents.once("dom-ready", () => {
+    trayWindow.show();
   });
 }
 
