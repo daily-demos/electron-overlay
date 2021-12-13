@@ -97,8 +97,6 @@ function addTile(id, userName) {
   tile.id = getTileID(id);
   tile.classList.add("clickable", "tile");
 
-  tile.style.backgroundImage = "linear-gradient(45deg, #121A24, #2B3F56)";
-
   // Create name element
   const name = document.createElement("div");
   let n = userName ? userName : id;
