@@ -118,6 +118,7 @@ button {
   padding: 8px 16px;
   width: 100%;
   margin-top: 16px;
+  cursor: pointer;
 
   position: static;
   height: 32px;
@@ -143,12 +144,12 @@ button {
   color: #121a24;
 }
 
-#footer a {
+a {
   color: #121a24;
   text-decoration: underline;
 }
 
-#footer a:hover {
+a:hover {
   color: #121a24;
   text-decoration: none;
 }

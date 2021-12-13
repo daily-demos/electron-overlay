@@ -6,6 +6,7 @@ const {
   Tray,
   Menu,
   MenuItem,
+  shell,
 } = require("electron");
 const path = require("path");
 const positioner = require("electron-traywindow-positioner");
@@ -42,6 +43,10 @@ function createTrayWindow() {
   });
   trayWindow.webContents.once("dom-ready", () => {
     trayWindow.show();
+  });
+  trayWindow.webContents.on("new-window", function (e, url) {
+    e.preventDefault();
+    shell.openExternal(url);
   });
 }
 

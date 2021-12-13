@@ -18,6 +18,10 @@ body {
   flex-direction: column;
 }
 
+[draggable] {
+  cursor: grab;
+}
+
 #tiles {
   position: relative;
   padding-top: 60px;
@@ -118,6 +122,7 @@ video {
 
 #callControls button {
   margin: 0 8px;
+  cursor: pointer;
 }
 
 #callControls .cam-on {
@@ -174,7 +179,7 @@ video {
   line-height: 16px;
   color: #ffffff;
   position: absolute;
-  top: 103px;
+  top: 95px;
   box-sizing: border-box;
   text-align: center;
 }

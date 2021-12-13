@@ -137,5 +137,5 @@ function updateLocal(p) {
     updateCamBtn(localState.video);
   }
   const tracks = getParticipantTracks(p);
-  addOrUpdateTile(p.session_id, "You!", tracks.video, tracks.audio, true);
+  addOrUpdateTile(p.session_id, "You", tracks.video, tracks.audio, true);
 }
