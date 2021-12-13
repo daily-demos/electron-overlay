@@ -81,11 +81,25 @@ function updateClipboardBtnClick(callURL) {
     clipboardBtn.onclick = null;
     return;
   }
+  const tooltip = document.getElementById("clipboardTooltip");
+
+  let timer;
   clipboardBtn.onclick = () => {
-    navigator.clipboard.writeText(callURL).catch((err) => {
-      const msg = "failed to copy room URL to clipboard";
-      console.error(msg, err);
-      alert(msg);
-    });
+    navigator.clipboard
+      .writeText(callURL)
+      .then(() => {
+        if (!tooltip.classList.contains("active")) {
+          tooltip.classList.add("active");
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+          tooltip.classList.remove("active");
+        }, 1200);
+      })
+      .catch((err) => {
+        const msg = `failed to copy room URL to clipboard: ${err}`;
+        console.error(msg, err);
+        alert(msg);
+      });
   };
 }
