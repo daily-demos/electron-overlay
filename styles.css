@@ -33,6 +33,7 @@ body {
   width: 120px;
   height: 120px;
   border-radius: 25px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
 video {
@@ -179,12 +180,15 @@ video {
   line-height: 16px;
   color: #ffffff;
   position: absolute;
-  top: 95px;
+  top: 97px;
   box-sizing: border-box;
   text-align: center;
 }
 
 #tiles .name.speaker {
+  border-color: #fad71f;
+  border-width: 2px;
+  border-style: solid;
   background: #fad71f;
   color: #121a24;
 }
@@ -220,7 +224,7 @@ video {
   object-fit: cover;
 }
 
-.speaker {
+#tiles .tile.speaker {
   border-color: #fad71f;
   border-width: 4px;
   border-style: solid;
