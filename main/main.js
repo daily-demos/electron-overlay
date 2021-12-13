@@ -55,13 +55,15 @@ function createCallWindow() {
   callWindow = new BrowserWindow({
     title: "Daily",
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "preloadCall.js"),
     },
     frame: false,
     autoHideMenuBar: true,
     transparent: true,
     skipTaskbar: true,
     hasShadow: false,
+    // Don't show the window until the user is in a call.
+    show: false,
   });
 
   const dev = app.commandLine.hasSwitch("dev");
@@ -77,7 +79,6 @@ function createCallWindow() {
     }
 
     callWindow.setAlwaysOnTop(true, level);
-    callWindow.hide();
   }
 
   // and load the index.html of the app.
@@ -117,9 +118,9 @@ function setupTray() {
   tray.on("click", function () {
     if (trayWindow.isVisible()) {
       trayWindow.hide();
-    } else {
-      trayWindow.show();
+      return;
     }
+    trayWindow.show();
   });
   tray.on("right-click", () => {
     tray.popUpContextMenu(tray.contextMenu);
@@ -129,11 +130,9 @@ function setupTray() {
 function setupTrayMenu(inCall) {
   const menuItems = [];
 
-  // If the user is not in a call and the window is minimized,
-  // show "Join Call" button to display the join form.
+  // If the user is in a call, allow them to leave the call
+  // via the context menu
   if (inCall) {
-    // If the user is in a call, allow them to leave the call
-    // via the context menu
     const item = new MenuItem({
       label: "Leave Call",
       type: "normal",

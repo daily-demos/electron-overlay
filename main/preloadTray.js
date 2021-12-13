@@ -2,8 +2,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 // This listener will allow us to handle a call join failure.
 ipcRenderer.on("join-failure", () => {
-  const event = new Event("join-failure");
-  window.dispatchEvent(event);
+  window.dispatchEvent(new Event("join-failure"));
 });
 
 ipcRenderer.on("left-call", () => {
