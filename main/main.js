@@ -7,7 +7,9 @@ const {
   Menu,
   MenuItem,
   shell,
+  globalShortcut,
 } = require("electron");
+
 const path = require("path");
 const positioner = require("electron-traywindow-positioner");
 
@@ -33,6 +35,7 @@ function createTrayWindow() {
     skipTaskbar: true,
     hasShadow: false,
   });
+
   trayWindow.loadFile("tray.html");
   trayWindow.on("blur", () => {
     trayWindow.hide();
@@ -65,6 +68,8 @@ function createCallWindow() {
     // Don't show the window until the user is in a call.
     show: false,
   });
+
+  preventRefresh(callWindow);
 
   const dev = app.commandLine.hasSwitch("dev");
   if (!dev) {
@@ -153,6 +158,19 @@ function setupTrayMenu(inCall) {
 
   const contextMenu = Menu.buildFromTemplate(menuItems);
   tray.contextMenu = contextMenu;
+}
+
+// Redirect any refresh shortcuts, since we don't want the user to
+// accidentally drop out of the call.
+function preventRefresh(window) {
+  window.on("focus", () => {
+    globalShortcut.register("CommandOrControl+R", () => {});
+    globalShortcut.register("CommandOrControl+Shift+R", () => {});
+    globalShortcut.register("F5", () => {});
+  });
+  window.on("blur", () => {
+    globalShortcut.unregisterAll(window);
+  });
 }
 
 // Our custom API handlers are defined below.
