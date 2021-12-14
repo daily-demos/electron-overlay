@@ -2,8 +2,7 @@
 
 This demo highlights [Daily's call object](https://docs.daily.co/guides/products/call-object), and how it can be used to create an Electron video call app.
 
-![Call Overlay demo screenshot displaying participant tiles being positioned around
-a shared document](./screenshot.png)
+![Call Overlay demo screenshot displaying participant tiles being positioned around a shared document](./screenshot.png)
 
 ## Prerequisites
 
