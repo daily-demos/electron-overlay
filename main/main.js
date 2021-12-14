@@ -36,6 +36,8 @@ function createTrayWindow() {
     hasShadow: false,
   });
 
+  preventRefresh(trayWindow);
+
   trayWindow.loadFile("tray.html");
   trayWindow.on("blur", () => {
     trayWindow.hide();
