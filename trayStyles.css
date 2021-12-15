@@ -1,0 +1,159 @@
+:root {
+  --font-family: "Roboto", "Helvetica Neue", Sans-Serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-family);
+  overflow: hidden;
+}
+
+#wrapper {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  position: absolute;
+  width: 280px;
+  overflow: hidden;
+  background: rgb(230 234 239);
+  border: 0.5px solid rgba(0, 0, 0, 0.38);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(36px);
+  border-radius: 5px;
+}
+
+#wrapper .entry {
+  height: 288px;
+}
+
+#wrapper .inCall {
+  height: 168px;
+}
+
+#entry,
+#inCall {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: static;
+  width: 100%;
+}
+
+#enterCall {
+  width: 100%;
+  margin-block-end: 0px;
+}
+
+#inCall {
+  display: none;
+}
+
+h2 {
+  /* Create video call */
+  position: static;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  margin: 0;
+
+  /* Light UI/accentText */
+  color: #121a24;
+}
+
+#enterCall .formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  margin-top: 16px;
+  width: 100%;
+
+  position: static;
+  left: 0px;
+}
+
+#enterCall label,
+p {
+  position: static;
+
+  /* Dashboard / Base Strong */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+
+  /* Light UI/accentText */
+  color: #121a24;
+}
+
+#enterCall input {
+  position: static;
+  height: 40px;
+  left: 0px;
+  /* Core/White */
+  background: #ffffff;
+  opacity: 0.6;
+  border-radius: 4px;
+  margin-top: 8px;
+  width: 100%;
+  border: none;
+  padding: 0 12px;
+}
+
+button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 100%;
+  margin-top: 16px;
+  cursor: pointer;
+
+  position: static;
+  height: 32px;
+  left: 0px;
+
+  /* Light UI/accent */
+  background: #1bebb9;
+  border-radius: 8px;
+  border: none;
+}
+
+button:active {
+  opacity: 0.6;
+}
+
+#footer {
+  justify-content: space-between;
+  display: flex;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  width: 100%;
+  margin-top: 16px;
+
+  /* Light UI/accentText */
+  color: #121a24;
+}
+
+a {
+  color: #121a24;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #121a24;
+  text-decoration: none;
+}

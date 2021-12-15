@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./trayStyles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="wrapper" class="entry">
+      <div id="entry">
+        <h2>Join a video call</h2>
+        <form id="enterCall">
+          <span class="formContainer">
+            <label>Your Name:</label>
+            <input type="text" id="userName" required />
+          </span>
+          <span class="formContainer">
+            <label
+              >Room URL (<a
+                href="https://dashboard.daily.co/rooms/create"
+                target="_blank"
+                >Create room</a
+              >):
+            </label>
+            <input
+              type="url"
+              id="roomURL"
+              placeholder="https://<domain>.daily.co/<room>"
+              required
+            />
+          </span>
+          <button type="submit">Join Call</button>
+        </form>
+      </div>
+      <div id="inCall">
+        <h2>Invite others to call</h2>
+        <p>Copy and share URL with others to invite them to this call</p>
+        <button id="clipboard">Copy to clipboard</button>
+      </div>
+      <div id="footer">
+        <img src="./assets/daily.svg" alt="Daily logo" />
+        <span
+          >A demo from
+          <a href="https://daily.co" target="_blank">Daily</a></span
+        >
+      </div>
+    </div>
+    <script src="./renderer/tray/tray.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; frame-src 'self' https://*.daily.co; script-src 'self' https://unpkg.com/@daily-co/daily-js 'unsafe-eval'; connect-src https://*.daily.co https://*.pluot.blue wss:; worker-src 'self' blob:; style-src-elem 'self' https://fonts.googleapis.com/css2; font-src 'self' https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2 https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2 https://*.gstatic.com"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./styles.css" rel="stylesheet" />
+    <title>Daily Call Overlay</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="callControls" class="clickable" draggable="true">
+        <div id="controller">
+          <div id="dots"></div>
+          <div id="line"></div>
+        </div>
+        <button id="toggleCam"></button>
+        <button id="toggleMic"></button>
+        <button id="clipboard" class="invite"></button>
+        <span id="clipboardTooltip">Room URL copied</span>
+        <button id="leave">Leave Call</button>
+      </div>
+
+      <div id="tiles"></div>
+    </div>
+    <!-- You can also require other files to run in this process -->
+    <script src="https://unpkg.com/@daily-co/daily-js"></script>
+    <script src="./renderer/call/daily.js" type="module"></script>
+  </body>
+</html>
