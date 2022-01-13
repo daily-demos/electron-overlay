@@ -83,8 +83,6 @@ function toggleBlur() {
     type = "none";
   }
 
-  console.log("togging blur:", type, config);
-
   callObject.updateInputSettings({
     video: {
       processor: {
