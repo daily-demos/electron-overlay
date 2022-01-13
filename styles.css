@@ -92,21 +92,20 @@ video {
 
 #toggleCam,
 #toggleMic,
-#toggleBlur,
 #clipboard {
   width: 30px;
   height: 30px;
   border: none;
   background-color: transparent;
   border-radius: 5px;
+  size: 10px;
 }
 
-#toggleCam:hover,
-#toggleMic:hover,
-#toggleBlur:hover,
-#clipboard:hover {
-  background: rgba(245, 245, 245, 0.6);
+#toggleBlur {
+  height: 30px;
+  border: none;
   border-radius: 5px;
+  font-size: 10px;
 }
 
 #leave {
@@ -160,8 +159,16 @@ video {
 }
 
 #callControls .blur-off {
-  background-color: #f63135;
-  color: #fff;
+  background-color: #e2fbfd;
+  color: #2b3f56;
+}
+
+#toggleCam:hover,
+#toggleMic:hover,
+#toggleBlur:hover,
+#clipboard:hover {
+  background-color: rgba(245, 245, 245, 0.6);
+  border-radius: 5px;
 }
 
 #clipboard.invite {
