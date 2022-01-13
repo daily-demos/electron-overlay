@@ -53,7 +53,7 @@ video {
 
   position: absolute;
 
-  width: 265px;
+  width: 300px;
   height: 56px;
 
   left: calc(50% - 265px / 2);
@@ -92,18 +92,21 @@ video {
 
 #toggleCam,
 #toggleMic,
+#toggleBlur,
 #clipboard {
   width: 30px;
   height: 30px;
   border: none;
   background-color: transparent;
+  border-radius: 5px;
 }
 
 #toggleCam:hover,
 #toggleMic:hover,
+#toggleBlur:hover,
 #clipboard:hover {
   background: rgba(245, 245, 245, 0.6);
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 #leave {
@@ -123,7 +126,7 @@ video {
 }
 
 #callControls button {
-  margin: 0 8px;
+  margin: 0 5px;
   cursor: pointer;
 }
 
@@ -149,6 +152,16 @@ video {
   background-image: url("./assets/microphone-off.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#callControls .blur-on {
+  background-color: #fff;
+  color: #000;
+}
+
+#callControls .blur-off {
+  background-color: #f63135;
+  color: #fff;
 }
 
 #clipboard.invite {
