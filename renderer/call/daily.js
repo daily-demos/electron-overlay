@@ -8,6 +8,8 @@ import {
   updateCamBtn,
   updateCallControls,
   updateMicBtn,
+  registerBlurBtnListener,
+  updateBlurBtn,
 } from "./nav.js";
 import {
   addOrUpdateTile,
@@ -20,14 +22,16 @@ const playableState = "playable";
 
 let callObject = null;
 let localState = {
-  audio: false,
-  video: false,
+  audio: null,
+  video: null,
+  blur: false,
 };
 
 registerJoinListener(initAndJoin);
 registerLeaveBtnListener(leave);
 registerCamBtnListener(toggleCamera);
 registerMicBtnListener(toggleMicrophone);
+registerBlurBtnListener(toggleBlur);
 
 async function initAndJoin(roomURL, name) {
   callObject = DailyIframe.createCallObject({
@@ -42,7 +46,8 @@ async function initAndJoin(roomURL, name) {
     .on("participant-updated", handleParticipantUpdated)
     .on("participant-joined", handleParticipantJoined)
     .on("participant-left", handleParticipantLeft)
-    .on("active-speaker-change", handleActiveSpeakerChange);
+    .on("active-speaker-change", handleActiveSpeakerChange)
+    .on("input-settings-updated", handleInputSettingsChange);
 
   return callObject
     .join({ url: roomURL, userName: name })
@@ -67,6 +72,25 @@ function toggleCamera() {
 
 function toggleMicrophone() {
   callObject.setLocalAudio(!localState.audio);
+}
+
+function toggleBlur() {
+  let type, config;
+  if (!localState.blur) {
+    type = "background-blur";
+    config = { strength: 0.95 };
+  } else {
+    type = "none";
+  }
+
+  callObject.updateInputSettings({
+    video: {
+      processor: {
+        type: type,
+        config: config,
+      },
+    },
+  });
 }
 
 function handleCameraError(event) {
@@ -125,6 +149,12 @@ function handleParticipantLeft(event) {
 function handleActiveSpeakerChange(event) {
   console.log("active speaker change", event.activeSpeaker.peerId);
   updateActiveSpeaker(event.activeSpeaker.peerId);
+}
+
+function handleInputSettingsChange(event) {
+  localState.blur =
+    event.inputSettings?.video?.processor?.type === "background-blur";
+  updateBlurBtn(localState.blur);
 }
 
 function updateLocal(p) {
