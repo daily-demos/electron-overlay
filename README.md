@@ -4,6 +4,8 @@ This demo highlights [Daily's call object](https://docs.daily.co/guides/products
 
 ![Call Overlay demo screenshot displaying participant tiles being positioned around a shared document](./screenshot.png)
 
+A tutorial series based on this demo can be found [on the Daily blog](https://www.daily.co/blog/tag/electron/).
+
 ## Prerequisites
 
 - [Sign up for a Daily account](https://dashboard.daily.co/signup).
