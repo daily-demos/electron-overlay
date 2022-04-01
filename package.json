@@ -22,7 +22,7 @@
     "electron-traywindow-positioner": "^1.1.0"
   },
   "devDependencies": {
-    "electron": "^15.3.0",
+    "electron": "^15.3.5",
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "nodemon": "^2.0.14",
