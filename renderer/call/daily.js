@@ -37,6 +37,7 @@ async function initAndJoin(roomURL, name) {
   callObject = DailyIframe.createCallObject({
     dailyConfig: {
       experimentalChromeVideoMuteLightOff: true,
+      avoidEval: true,
     },
   })
     .on("camera-error", handleCameraError)
