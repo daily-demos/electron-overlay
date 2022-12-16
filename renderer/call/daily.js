@@ -10,13 +10,13 @@ import {
   updateMicBtn,
   registerBlurBtnListener,
   updateBlurBtn,
-} from './nav';
+} from './nav.js';
 import {
   addOrUpdateTile,
   removeAllTiles,
   removeTile,
   updateActiveSpeaker,
-} from './tile';
+} from './tile.js';
 
 const playableState = 'playable';
 
@@ -98,7 +98,6 @@ function handleCameraError(event) {
 }
 
 function handleError(event) {
-  console.log('got error');
   console.error(event);
 }
 
@@ -147,7 +146,6 @@ function handleParticipantLeft(event) {
 }
 
 function handleActiveSpeakerChange(event) {
-  console.log('active speaker change', event.activeSpeaker.peerId);
   updateActiveSpeaker(event.activeSpeaker.peerId);
 }
 

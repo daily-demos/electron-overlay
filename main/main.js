@@ -13,6 +13,8 @@ const {
 const path = require('path');
 const positioner = require('electron-traywindow-positioner');
 
+const devMode = app.commandLine.hasSwitch('dev');
+
 let callWindow = null;
 let trayWindow = null;
 let tray = null;
@@ -73,20 +75,22 @@ function createCallWindow() {
 
   preventRefresh(callWindow);
 
-  const dev = app.commandLine.hasSwitch('dev');
-  if (!dev) {
+  if (devMode) {
+    callWindow.show();
+    callWindow.openDevTools();
+  } else {
     callWindow.setIgnoreMouseEvents(true, { forward: true });
-    callWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
-
-    let level = 'normal';
-    // Mac OS requires a different level for our drag/drop and overlay
-    // functionality to work as expected.
-    if (process.platform === 'darwin') {
-      level = 'floating';
-    }
-
-    callWindow.setAlwaysOnTop(true, level);
   }
+  callWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
+  let level = 'normal';
+  // Mac OS requires a different level for our drag/drop and overlay
+  // functionality to work as expected.
+  if (process.platform === 'darwin') {
+    level = 'floating';
+  }
+
+  callWindow.setAlwaysOnTop(true, level);
 
   // and load the index.html of the app.
   callWindow.loadFile('index.html');

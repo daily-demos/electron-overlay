@@ -1,5 +1,8 @@
 const joinForm = document.getElementById('enterCall');
 
+const entryID = 'entry';
+const inCallID = 'inCall';
+
 joinForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const urlEle = document.getElementById('roomURL');
@@ -9,13 +12,13 @@ joinForm.addEventListener('submit', (event) => {
 });
 
 function setupInCallView(callURL) {
-  const entry = document.getElementById('entry');
-  const inCall = document.getElementById('inCall');
+  const entry = document.getElementById(entryID);
+  const inCall = document.getElementById(inCallID);
   entry.style.display = 'none';
   inCall.style.display = 'block';
   const wrapper = document.getElementById('wrapper');
-  wrapper.classList.remove('entry');
-  wrapper.classList.add('inCall');
+  wrapper.classList.remove(entryID);
+  wrapper.classList.add(inCallID);
 
   const copyButton = document.getElementById('clipboard');
   copyButton.onclick = () => {
@@ -36,11 +39,11 @@ window.addEventListener('left-call', () => {
 });
 
 function resetTray() {
-  const entry = document.getElementById('entry');
-  const inCall = document.getElementById('inCall');
+  const entry = document.getElementById(entryID);
+  const inCall = document.getElementById(inCallID);
   entry.style.display = 'block';
   inCall.style.display = 'none';
   const wrapper = document.getElementById('wrapper');
-  wrapper.classList.remove('inCall');
-  wrapper.classList.add('entry');
+  wrapper.classList.remove(inCallID);
+  wrapper.classList.add(entryID);
 }

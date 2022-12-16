@@ -1,6 +1,6 @@
 // tile.js handles all participant tiles.
 
-import setupDraggableElement from './drag';
+import setupDraggableElement from './drag.js';
 
 // addOrUpdateTile adds a tile for a participant, or updates a tile
 // if it already exists.
