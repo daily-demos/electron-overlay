@@ -5,7 +5,9 @@
   "main": "main/main.js",
   "scripts": {
     "start": "electron .",
-    "dev-start": "electron . -dev"
+    "dev-start": "electron . -dev",
+    "lint": "eslint ./",
+    "lintFix": "eslint ./ --fix"
   },
   "repository": "https://github.com/daily-demos/electron-overlay",
   "keywords": [
@@ -18,14 +20,17 @@
   "author": "Liza Shulyayeva",
   "license": "CC0-1.0",
   "dependencies": {
-    "@daily-co/daily-js": "^0.21.0",
-    "electron-traywindow-positioner": "^1.1.0"
+    "@daily-co/daily-js": "^0.35.1",
+    "electron": "^22.0.0",
+    "electron-traywindow-positioner": "^1.1.1"
   },
   "devDependencies": {
-    "electron": "^19.0.6",
-    "eslint": "^8.2.0",
-    "eslint-config-prettier": "^8.3.0",
-    "nodemon": "^2.0.18",
-    "prettier": "2.4.1"
+    "eslint": "^8.29.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.1"
   }
 }

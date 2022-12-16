@@ -10,18 +10,18 @@ import {
   updateMicBtn,
   registerBlurBtnListener,
   updateBlurBtn,
-} from "./nav.js";
+} from './nav';
 import {
   addOrUpdateTile,
   removeAllTiles,
   removeTile,
   updateActiveSpeaker,
-} from "./tile.js";
+} from './tile';
 
-const playableState = "playable";
+const playableState = 'playable';
 
 let callObject = null;
-let localState = {
+const localState = {
   audio: null,
   video: null,
   blur: false,
@@ -40,21 +40,19 @@ async function initAndJoin(roomURL, name) {
       avoidEval: true,
     },
   })
-    .on("camera-error", handleCameraError)
-    .on("joined-meeting", handleJoinedMeeting)
-    .on("left-meeting", handleLeftMeeting)
-    .on("error", handleError)
-    .on("participant-updated", handleParticipantUpdated)
-    .on("participant-joined", handleParticipantJoined)
-    .on("participant-left", handleParticipantLeft)
-    .on("active-speaker-change", handleActiveSpeakerChange)
-    .on("input-settings-updated", handleInputSettingsChange);
+    .on('camera-error', handleCameraError)
+    .on('joined-meeting', handleJoinedMeeting)
+    .on('left-meeting', handleLeftMeeting)
+    .on('error', handleError)
+    .on('participant-updated', handleParticipantUpdated)
+    .on('participant-joined', handleParticipantJoined)
+    .on('participant-left', handleParticipantLeft)
+    .on('active-speaker-change', handleActiveSpeakerChange)
+    .on('input-settings-updated', handleInputSettingsChange);
 
   return callObject
     .join({ url: roomURL, userName: name })
-    .then(() => {
-      return true;
-    })
+    .then(() => true)
     .catch((err) => {
       alert(err);
       return false;
@@ -76,19 +74,20 @@ function toggleMicrophone() {
 }
 
 function toggleBlur() {
-  let type, config;
+  let type;
+  let config;
   if (!localState.blur) {
-    type = "background-blur";
+    type = 'background-blur';
     config = { strength: 0.95 };
   } else {
-    type = "none";
+    type = 'none';
   }
 
   callObject.updateInputSettings({
     video: {
       processor: {
-        type: type,
-        config: config,
+        type,
+        config,
       },
     },
   });
@@ -99,7 +98,7 @@ function handleCameraError(event) {
 }
 
 function handleError(event) {
-  console.log("got error");
+  console.log('got error');
   console.error(event);
 }
 
@@ -148,25 +147,25 @@ function handleParticipantLeft(event) {
 }
 
 function handleActiveSpeakerChange(event) {
-  console.log("active speaker change", event.activeSpeaker.peerId);
+  console.log('active speaker change', event.activeSpeaker.peerId);
   updateActiveSpeaker(event.activeSpeaker.peerId);
 }
 
 function handleInputSettingsChange(event) {
   localState.blur =
-    event.inputSettings?.video?.processor?.type === "background-blur";
+    event.inputSettings?.video?.processor?.type === 'background-blur';
   updateBlurBtn(localState.blur);
 }
 
 function updateLocal(p) {
-  if (localState.audio != p.audio) {
+  if (localState.audio !== p.audio) {
     localState.audio = p.audio;
     updateMicBtn(localState.audio);
   }
-  if (localState.video != p.video) {
+  if (localState.video !== p.video) {
     localState.video = p.video;
     updateCamBtn(localState.video);
   }
   const tracks = getParticipantTracks(p);
-  addOrUpdateTile(p.session_id, "You", tracks.video, tracks.audio, true);
+  addOrUpdateTile(p.session_id, 'You', tracks.video, tracks.audio, true);
 }
